@@ -1,0 +1,125 @@
+\documentclass[mgr,oneside]{mgr}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\frenchspacing
+\linespread{1.3}
+\usepackage{indentfirst}
+\usepackage{caption}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+	backgroundcolor=\color{white},   % choose the background color
+	basicstyle=\footnotesize,        % size of fonts used for the code
+	breaklines=true,                 % automatic line breaking only at whitespace
+	frame=single,
+	commentstyle=\color{mygreen},    % comment style
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	keywordstyle=\color{blue},       % keyword style
+	stringstyle=\color{mymauve},     % string literal style
+}
+
+\author{Marcin Mantke}
+\title{Analiza porównawcza popularnych frameworków webowych.}
+\engtitle{Comparative analysis of most popular web frameworks.}
+\supervisor{dr inż. Roman Ptak}
+\field{Informatyka (INF)}
+\specialisation{Inżynieria systemów informatycznych (INS)}
+\date{2017}
+
+\begin{document}
+\maketitle
+\tableofcontents
+% dodać rozdział z wstępem teoretycznym, teoria do metod porównywania (5 rozdzial)
+\chapter{Wstęp}
+\section{Ogólny opis pracy}
+W momencie pisania pracy istnieje niezliczona ilość frameworków webowych. Prawie codziennie, dla samego języka JavaScript, powstaje jeden nowy (micro) framework. Przyczyn takiego stanu rzeczy jest kilka. Po pierwsze, problemy, z jakimi spotykają się programiści są bardzo zróżnicowane oraz skomplikowane. Wynika to z nacisku biznesu, czyli klientów, na to, aby nowo powstały proukt był innowacyjny. Programista oczywiście posiada narzędzia, które powinny być wystarczające do rozwiązania powierzonego mu problemu, jednakże niekiedy korzystanie z narzuconych przez framework rozwiązań wręcz utrudnia wykonanie powierzonej pracy. Z tego powodu powstają nowe frameworki, które udostępniają zestaw narzędzi ukierunkowany pod rozwiązanie nowego, konkretnego problemu. Druga przyczyna jest w pewien sposób powiązana z pierwszą. Jest to stworzenie frameworku nie w odpowiedzi na potrzebę, ale wygenerowanie potrzeby poprzez stworzenie frameworku, który ułatwia rozwiązanie przykładowego problemu. Kolejnym powodem jest próba odchudzenia istniejących frameworków. Przykładem może być Ruby on Rails, który jest frameworkiem kompletnym, ale niekiedy posiadającym zbyt dużo wbudowanych funkcji, z których trudno jest zrezygnować, a które w danym projekcie nie zostaną wykorzystane. Zwiększa to rozmiar oraz złożoność projektu, co oczywiście jest niekorzystne.
+
+Fakt ten pokazuje jak ważnym elementem stały się dla programistów frameworki. Niestety, tak dynamiczny rozwój rozwiązań tego typu powoduje spory problem jeśli chodzi o wybór technologii.
+
+Ninejsza praca ma na celu zaprezentowanie wybranych frameworków webowych oraz dokonanie porównania ich funkcjonalności oraz wydajności. Analiza porównawcza ma na celu wyszczególnienie cech frameworków, na które programista powinien zwrócić szczególną uwagę przy doborze frameworku.
+
+\section{Cel pracy}
+
+\section{Wymagania}
+\section{Zarys koncepcji}
+
+\chapter{Przedstawienie omawianych technologii}
+\section{Historia i rozwój technologii webowych}
+Od lat 90 XX wieku świat obserwuje bardzo dynamiczny rozwój technologii związanych z Internetem. Począwszy od roku 1991, kiedy to naukowcy z instytu badawczego \textbf{CERN} (ang. \textit{European Organization for Nuclear Research}) opracowali standard WWW, przed programiastami zaczęła się otwierać nowa gałąź tworzenia aplikacji, którą są aplikacje internetowe. Początkowo aplikacje te były jedynie statycznymi stronami WWW, na których znajdował się jedynie tekst. Wprowadzenie kaskadowych arkuszy styli (\emph{CSS}) w roku 1996 sprawiło, że strony internetowe przybrały graficzną formę. Rok 1997 przyniósł obsługę języka \emph{JavaScript} w przeglądarkach internetowych. Oznaczało to, że strony internetowe, poza statycznymi elementami, zyskały elementy dynamiczne, np. reagujące na akcje użytkownika.
+
+Wraz ze wzrostem dostępu ludzi do Internetu rozwijały się technologie odpowiedzialne za strony internetowe. Za punkt początkowy istnienia nie stron, a aplikacji internetowych, można przyjać rok 1997 i powstanie języka \emph{PHP}. Był to pierwszy interpretowany skryptowy język programowania, który służył do budowania aplikacji internetowych działających w czasie rzeczywistym. Wraz z rozwojem języka PHP oraz innych, podobnych mu języków, np. \emph{Python} i \emph{Ruby}, zmienił się sposób budowania aplikacji. Programiści zaczęli rezygnować ze standardowych klientów w postaci aplikacji desktopowych i przechodzili na tzw. cienkich klientów (ang. \textit{thin client}). Trend ten przyspiesza rozwój oraz różnorodność aplikacji serwerowych posiadających interfejs graficzny w formie strony internetowej, które nazywane są aplikacjami internetowymi \cite{historia}.
+
+\section{Aplikacja internetowa}
+Aplikacja internetowa (webowa) jest \emph{de facto} aplikacją znajdującą się nie na komputerze użytkownika, lecz na ogólnodostępnym serwerze. Komunikacja pomiędzy, niekiedy rozproszonymi, elementami aplikacji odbywa się poprzez sieć komputerową. Aplikacja webowa swój interfejs graficzny poprzez przeglądarkę internetową bądź np. aplikację mobilną.
+
+\section{Framework webowy} % moduły i biblioteki, np do połączenia z bazą danych
+Aby ułatwić korzystanie z coraz liczniejszych technologii wykorzystywanych w tworzeniu aplikacji internetowych, powstały narzędzia nazywane frameworkami webowymi. Framework jest uniwersalnym środowiskiem programistycznym, które dostarcza niezbędne narzędzia wymagane do stworzenia aplikacji internetowej w wybranym języku programowania \cite{framework}. Każdy z frameworków dostarcza pewną abstrakcję, która znajduje się wokół kodu napisanego przez programistę. Przykładem takiej abstrakcji jest system mapowania ścieżki podstrony (np. \textit{/users/3}) na konkretną akcję w aplikacji (zwykle akcja \emph{SHOW} dla kontrolera \emph{Users}), czyli \emph{routing}. Twórcy frameworków zauważyli, że w każdej aplikacji webowej są stosowane te same typy rozwiązań, więc w wielu przypadkach wprowadzili dane rozwiązania jako integralne części frameworków. W efekcie programiści mogą korzystać z gotowych, dogłębnie przetestowanych rozwiązań, które znajdują się w 90\% aplikacji webowych.
+
+\chapter{Przegląd wybranych rozwiązań}
+\section{Ruby on Rails}
+\section{Phoenix}
+\section{Express}
+
+\chapter{Analiza porównawcza}
+\section{Opisowe porównanie charakterystyki wybranych frameworków}
+\subsection{Ruby on Rails vs Phoenix}
+\subsection{Ruby on Rails vs Express}
+\subsection{Phoenix vs Express}
+\section{Subiektywna ocena}
+
+\chapter{Implementacja}
+\section{Ruby on Rails}
+\section{Phoenix}
+\section{Express}
+
+\chapter{Projekt komputerowego środowiska eksperymentalnego}
+\section{Plan prowadzenia eksperymentów}
+
+\section{Wykorzystane narzędzia}
+\subsection{Nginx}
+\subsection{Docker}
+\section{Benchmarki}
+% https://www.sitepoint.com/tools-testing-website-performance/
+\subsection{Ruby}
+% http://rubylearning.com/blog/2013/06/19/how-do-i-benchmark-ruby-code/
+\subsection{Elixir}
+% https://github.com/PragTob/benchee
+\subsection{JavaScript}
+% https://benchmarkjs.com/
+
+\chapter{Analiza wydajnościowa}
+\label{cha:analiza_wydajnosciowa}
+\section{Metody mierzenia wydajności aplikacji internetowych}
+\section{Wyniki badań}
+
+\chapter{Podsumowanie}
+
+\renewcommand\bibname{Literatura}
+\begin{thebibliography}{inteligencja}
+	\addcontentsline{toc}{chapter}{Literatura}
+
+  \bibitem{historia}
+  \emph{Historia Internetu}, dostępne pod adresem: \url{https://pl.wikipedia.org/wiki/Historia_Internetu}, aktualne na dzień 1.04.2017r.
+
+  \bibitem{framework}
+  \emph{Software framework}, dostępne pod adresem: \url{https://en.wikipedia.org/wiki/Software_framework}, aktualne na dzień 1.04.2017r.
+
+	\bibitem{rails_guide}
+	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2017r.
+
+	\bibitem{cleancode}
+	Martin, R. \emph{Czysty kod. Podręcznik dobrego programisty}, Gliwice, Wydawnictwo Helion 2010
+
+  \bibitem{benchmarking_tools}
+  Diwan, A. \emph{Tools for Testing Website Performance}, dostęp pod adresem: \url{https://www.sitepoint.com/tools-testing-website-performance/}, \\ aktualne na dzień 18.03.2017r.
+
+\end{thebibliography}
+\end{document}
