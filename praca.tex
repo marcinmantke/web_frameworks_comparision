@@ -40,11 +40,11 @@
 % dodać rozdział z wstępem teoretycznym, teoria do metod porównywania (5 rozdzial)
 \chapter{Wstęp}
 \section{Ogólny opis pracy}
-W momencie pisania pracy istnieje niezliczona ilość frameworków webowych. Prawie codziennie, dla samego języka JavaScript, powstaje jeden nowy (micro) framework. Przyczyn takiego stanu rzeczy jest kilka. Po pierwsze, problemy, z jakimi spotykają się programiści są bardzo zróżnicowane oraz skomplikowane. Wynika to z nacisku biznesu, czyli klientów, na to, aby nowo powstały proukt był innowacyjny. Programista oczywiście posiada narzędzia, które powinny być wystarczające do rozwiązania powierzonego mu problemu, jednakże niekiedy korzystanie z narzuconych przez framework rozwiązań wręcz utrudnia wykonanie powierzonej pracy. Z tego powodu powstają nowe frameworki, które udostępniają zestaw narzędzi ukierunkowany pod rozwiązanie nowego, konkretnego problemu. Druga przyczyna jest w pewien sposób powiązana z pierwszą. Jest to stworzenie frameworku nie w odpowiedzi na potrzebę, ale wygenerowanie potrzeby poprzez stworzenie frameworku, który ułatwia rozwiązanie przykładowego problemu. Kolejnym powodem jest próba odchudzenia istniejących frameworków. Przykładem może być Ruby on Rails, który jest frameworkiem kompletnym, ale niekiedy posiadającym zbyt dużo wbudowanych funkcji, z których trudno jest zrezygnować, a które w danym projekcie nie zostaną wykorzystane. Zwiększa to rozmiar oraz złożoność projektu, co oczywiście jest niekorzystne.
+W momencie pisania pracy istnieje niezliczona ilość frameworków webowych. Prawie codziennie, dla samego języka JavaScript, powstaje jeden nowy (micro) framework. Przyczyn takiego stanu rzeczy jest kilka. Po pierwsze, problemy, z~jakimi spotykają się programiści są bardzo zróżnicowane oraz skomplikowane. Wynika to z~nacisku biznesu, czyli klientów, na to, aby nowo powstały proukt był innowacyjny. Programista oczywiście posiada narzędzia, które powinny być wystarczające do rozwiązania powierzonego mu problemu, jednakże niekiedy korzystanie z~narzuconych przez framework rozwiązań wręcz utrudnia wykonanie powierzonej pracy. Z~tego powodu powstają nowe frameworki, które udostępniają zestaw narzędzi ukierunkowany pod rozwiązanie nowego, konkretnego problemu. Druga przyczyna jest w~pewien sposób powiązana z~pierwszą. Jest to stworzenie frameworku nie w~odpowiedzi na potrzebę, ale wygenerowanie potrzeby poprzez stworzenie frameworku, który ułatwia rozwiązanie przykładowego problemu. Kolejnym powodem jest próba odchudzenia istniejących frameworków. Przykładem może być Ruby~on~Rails, który jest frameworkiem kompletnym, ale niekiedy posiadającym zbyt dużo wbudowanych funkcji, z~których trudno jest zrezygnować, a~które w~danym projekcie nie zostaną wykorzystane. Zwiększa to rozmiar oraz złożoność projektu, co oczywiście jest niekorzystne.
 
-Fakt ten pokazuje jak ważnym elementem stały się dla programistów frameworki. Niestety, tak dynamiczny rozwój rozwiązań tego typu powoduje spory problem jeśli chodzi o wybór technologii.
+Ilość dostępnych frameworków pokazuje jak ważnym elementem stały się one dla programistów. Niestety, tak dynamiczny rozwój rozwiązań tego typu powoduje spory problem jeśli chodzi o~wybór technologii. Ninejsza praca ma na celu zaprezentowanie wybranych frameworków webowych oraz dokonanie porównania ich funkcjonalności oraz wydajności. Analiza porównawcza ma na celu wyszczególnienie cech frameworków, na które programista powinien zwrócić szczególną uwagę przy doborze frameworku.
 
-Ninejsza praca ma na celu zaprezentowanie wybranych frameworków webowych oraz dokonanie porównania ich funkcjonalności oraz wydajności. Analiza porównawcza ma na celu wyszczególnienie cech frameworków, na które programista powinien zwrócić szczególną uwagę przy doborze frameworku.
+Jako że framework dodaje do aplikacji pewną warstwę abstrakcji, czyli kod, naturalny jest narzut wydajnościowy na aplikację. Z tego powodu, poza różnymi cechami odnośnie budowy i~dostarczanych funkcjonalności, frameworki różnią się również wydajnością.
 
 \section{Cel pracy}
 
@@ -53,19 +53,49 @@ Ninejsza praca ma na celu zaprezentowanie wybranych frameworków webowych oraz d
 
 \chapter{Przedstawienie omawianych technologii}
 \section{Historia i rozwój technologii webowych}
-Od lat 90 XX wieku świat obserwuje bardzo dynamiczny rozwój technologii związanych z Internetem. Począwszy od roku 1991, kiedy to naukowcy z instytu badawczego \textbf{CERN} (ang. \textit{European Organization for Nuclear Research}) opracowali standard WWW, przed programiastami zaczęła się otwierać nowa gałąź tworzenia aplikacji, którą są aplikacje internetowe. Początkowo aplikacje te były jedynie statycznymi stronami WWW, na których znajdował się jedynie tekst. Wprowadzenie kaskadowych arkuszy styli (\emph{CSS}) w roku 1996 sprawiło, że strony internetowe przybrały graficzną formę. Rok 1997 przyniósł obsługę języka \emph{JavaScript} w przeglądarkach internetowych. Oznaczało to, że strony internetowe, poza statycznymi elementami, zyskały elementy dynamiczne, np. reagujące na akcje użytkownika.
+Od lat 90 XX wieku świat obserwuje bardzo dynamiczny rozwój technologii związanych z~Internetem. Począwszy od roku 1991, kiedy to naukowcy z~instytu badawczego \textbf{CERN} (ang. \textit{European Organization for Nuclear Research}) opracowali standard WWW, przed programiastami zaczęła się otwierać nowa gałąź tworzenia aplikacji, którą są aplikacje internetowe. Początkowo aplikacje te były jedynie statycznymi stronami WWW, na których znajdował się jedynie tekst. Wprowadzenie kaskadowych arkuszy styli (\emph{CSS}) w~roku 1996 sprawiło, że strony internetowe przybrały graficzną formę. Rok 1997 przyniósł obsługę języka \emph{JavaScript} w przeglądarkach internetowych. Oznaczało to, że strony internetowe, poza statycznymi elementami, zyskały elementy dynamiczne, np. reagujące na akcje użytkownika.
 
-Wraz ze wzrostem dostępu ludzi do Internetu rozwijały się technologie odpowiedzialne za strony internetowe. Za punkt początkowy istnienia nie stron, a aplikacji internetowych, można przyjać rok 1997 i powstanie języka \emph{PHP}. Był to pierwszy interpretowany skryptowy język programowania, który służył do budowania aplikacji internetowych działających w czasie rzeczywistym. Wraz z rozwojem języka PHP oraz innych, podobnych mu języków, np. \emph{Python} i \emph{Ruby}, zmienił się sposób budowania aplikacji. Programiści zaczęli rezygnować ze standardowych klientów w postaci aplikacji desktopowych i przechodzili na tzw. cienkich klientów (ang. \textit{thin client}). Trend ten przyspiesza rozwój oraz różnorodność aplikacji serwerowych posiadających interfejs graficzny w formie strony internetowej, które nazywane są aplikacjami internetowymi \cite{historia}.
+Wraz ze wzrostem dostępu ludzi do Internetu rozwijały się technologie odpowiedzialne za strony internetowe. Za punkt początkowy istnienia nie stron, a~aplikacji internetowych, można przyjać rok 1997 i~powstanie języka \emph{PHP}. Był to pierwszy interpretowany skryptowy język programowania, który służył do budowania aplikacji internetowych działających w~czasie rzeczywistym. Wraz z~rozwojem języka PHP oraz innych, podobnych mu języków, np. \emph{Python} i~\emph{Ruby}, zmienił się sposób budowania aplikacji. Programiści zaczęli rezygnować ze standardowych klientów w~postaci aplikacji desktopowych i~przechodzili na tzw. cienkich klientów (ang. \textit{thin client}). Trend ten przyspiesza rozwój oraz różnorodność aplikacji serwerowych posiadających interfejs graficzny w~formie strony internetowej, które nazywane są aplikacjami internetowymi \cite{historia}.
 
 \section{Aplikacja internetowa}
-Aplikacja internetowa (webowa) jest \emph{de facto} aplikacją znajdującą się nie na komputerze użytkownika, lecz na ogólnodostępnym serwerze. Komunikacja pomiędzy, niekiedy rozproszonymi, elementami aplikacji odbywa się poprzez sieć komputerową. Aplikacja webowa swój interfejs graficzny poprzez przeglądarkę internetową bądź np. aplikację mobilną.
+Aplikacja internetowa (webowa) jest aplikacją znajdującą się nie na komputerze użytkownika, lecz na ogólnodostępnym serwerze. Komunikacja pomiędzy, niekiedy rozproszonymi, elementami aplikacji odbywa się poprzez sieć komputerową. Aplikacja webowa swój interfejs graficzny poprzez przeglądarkę internetową bądź np. aplikację mobilną.
 
 \section{Framework webowy} % moduły i biblioteki, np do połączenia z bazą danych
-Aby ułatwić korzystanie z coraz liczniejszych technologii wykorzystywanych w tworzeniu aplikacji internetowych, powstały narzędzia nazywane frameworkami webowymi. Framework jest uniwersalnym środowiskiem programistycznym, które dostarcza niezbędne narzędzia wymagane do stworzenia aplikacji internetowej w wybranym języku programowania \cite{framework}. Każdy z frameworków dostarcza pewną abstrakcję, która znajduje się wokół kodu napisanego przez programistę. Przykładem takiej abstrakcji jest system mapowania ścieżki podstrony (np. \textit{/users/3}) na konkretną akcję w aplikacji (zwykle akcja \emph{SHOW} dla kontrolera \emph{Users}), czyli \emph{routing}. Twórcy frameworków zauważyli, że w każdej aplikacji webowej są stosowane te same typy rozwiązań, więc w wielu przypadkach wprowadzili dane rozwiązania jako integralne części frameworków. W efekcie programiści mogą korzystać z gotowych, dogłębnie przetestowanych rozwiązań, które znajdują się w 90\% aplikacji webowych.
+Aby ułatwić korzystanie z~coraz liczniejszych technologii wykorzystywanych w~tworzeniu aplikacji internetowych, powstały narzędzia nazywane frameworkami webowymi. Framework jest uniwersalnym środowiskiem programistycznym, które dostarcza niezbędne narzędzia wymagane do stworzenia aplikacji internetowej w~wybranym języku programowania \cite{framework}. Każdy z~frameworków dostarcza pewną abstrakcję, która znajduje się wokół kodu napisanego przez programistę. Przykładem takiej abstrakcji jest system mapowania ścieżki podstrony (np. \textit{/users/3}) na konkretną akcję w aplikacji (zwykle akcja \emph{SHOW} dla kontrolera \emph{Users}), czyli \emph{routing}. Twórcy frameworków zauważyli, że w~każdej aplikacji webowej są stosowane te same typy rozwiązań, więc w wielu przypadkach wprowadzili dane rozwiązania jako integralne części frameworków. W~efekcie programiści mogą korzystać z gotowych, dogłębnie przetestowanych rozwiązań, które znajdują się w~90\% aplikacji webowych.
 
 \chapter{Przegląd wybranych rozwiązań}
 \section{Ruby on Rails}
-\section{Phoenix}
+Ruby on Rails jest open source'owym frameworkiem webowym. Został stworzony w~głównej mierze przez duńskiego programistę Davida Heinemeiera Hanssona. Pierwsza wersja RoR ukazała się w~lipcu 2004 roku. Fakt ten pokazuje, że jest to już dojrzały framework, z~ugruntowaną pozycją na rynku. Potwierdzeniem tej pozycji jest liczne wsparcie społeczności. Rails'y zostały stworzone przez ponad 4,5 tysiąca osób, istnieje ok. 132 tysiące ogólnodostępnych paczek, które rozszerzają funkcjonalność tego frameworku. Ruby on Rails domyślnie korzysta z architektury MVC, czyli \emph{Model - View - Controller}.
+
+\subsection{Doktryna Ruby on Rails}
+Tworzeniu i rozwojowi Ruby on Rails towarzyszy kilka podstawowych zasad. Jedne istnieją od początku, inne ewoluowały na przestrzeni lat. Spisane są one w \emph{The Rails Doctrine} \cite{rails_doctrine}.
+
+\subsubsection{Optimize for programmer happiness}
+Pierwsza reguła odnosi się mocno do języka, z~którego wywodzą się Rails'y. Sam fakt umieszczenia nazwy języka Ruby w~nazwie frameworku pokazuje jak ważny jest on dla całego projektu. Motywacją stworzenia języka Ruby była chęć dostarczenia programistom radości z~pisania kodu. W momencie powstawania Ruby'ego, większość popularnych wtedy języków programowania narzucało sposób pisania bądź stosowało liczne ograniczenia w~sposobie pisania kodu. Ruby stał w~opozycji do tych zasad, dając programistom pełną dowolność w~sposobie tworzenia kodu.
+
+Jako przykład owego ,,uwolnienia'' programisty podawana jest \emph{Zasada Najmniejszego Zaskoczenia} (ang. The Principle of Least Surprise).
+\begin{lstlisting}[caption={Wyjście z interpretera Ruby'ego.},language=Ruby]
+$ irb
+irb(main):001:0> exit
+$ irb
+irb(main):001:0> quit
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Wyjście z interpretera Python'a.},language=Python]
+$ python
+>>> exit
+Use exit() or Ctrl-D (i.e. EOF) to exit
+\end{lstlisting}
+Ruby zaakceptuje oba polecenia opuszczenia interpretera. Python natomiast, pomimo odczytania intencji programisty (wyświetlenie instrukcji), opuści interpreter jedynie po wpisaniu komendy \emph{exit()} lub po użyciu kombinacji klawiszy \emph{Ctrl-D}, co oczywiście nie jest zgodne z~oczekiwaniami programisty.
+
+Wzorując się na zasadach, na których powstawał Ruby, Rails'y również miały umilać życie programistom. Jako przykład jest podawana klasa \emph{Inflector}. Zapisane są w~niej reguły oraz wyjątki od reguł w języku angielskim, które umożliwiają mapowanie klasy \emph{Comment} na tabelę \emph{Comments}, \emph{Person} na \emph{People} itp. Kolejnym przykładem może być dodatek do Ruby'owej klasy \emph{Array}, który poza dostępnym w~Rubym pierwszym elementem tablicy, umożliwia dostęp do kolejnych czterech elementów tablicy, poprzez wyrażenia \emph{Array\#second,~Array\#third} itd.
+
+Oczywiście nie są to kluczowe cechy frameworku, ale stanowczo zaznaczają ważkość celu, którym jest przede wszystkim sprawianie radości z~tworzenia oprogramowania.
+
+\subsubsection{Convention over Configuration}
+Twórcy Ruby on Rails starają się kłaść mocny nacisk na prostotę używania ich narzędzia. Zamiast zrzucać na programistów ciągłe podejmowanie decyzji w~kwestiach mało istotnych, jak na przykład format klucza obcego w~bazie danych, Rails'y narzucają konwencję nazewnictwa. Oczywiście jest możliwość konfiguracji narzuconych przez framework konwencji, lecz jest to raczej rzadko spotykane, a~wręcz niewskazane. Zasada ta, poza zdjęciem odpowiedzialności za część decyzji z~barków programisty, przynosi również inne korzyści. Dzięki ,,domyślnej'' konwencji, możliwe jest stworzenie głębszej abstrakcji, na której operuje framework. Przykładem może być zastosowanie wcześniej wymienionej klasy \emph{Inflector}. Jeśli możliwe jest zmapowanie klasy \emph{Person} na tabelę \emph{People}, to możliwe jest również zmapowanie relacji \textit{has_many: people} w taki sposób, aby domyślnie wykorzystywana była klasa \textit{Person}.
+
+\section{Phoenix} % https://media.pragprog.com/titles/phoenix/intro.pdf   http://www.phoenixframework.org/docs/resources
 \section{Express}
 
 \chapter{Analiza porównawcza}
@@ -101,7 +131,7 @@ Aby ułatwić korzystanie z coraz liczniejszych technologii wykorzystywanych w t
 \section{Wyniki badań}
 
 \chapter{Podsumowanie}
-
+\input{bibliography}
 \renewcommand\bibname{Literatura}
 \begin{thebibliography}{inteligencja}
 	\addcontentsline{toc}{chapter}{Literatura}
@@ -115,6 +145,11 @@ Aby ułatwić korzystanie z coraz liczniejszych technologii wykorzystywanych w t
 	\bibitem{rails_guide}
 	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2017r.
 
+  \bibitem{rails_doctrine}
+  \emph{Ruby on Rails Doctrine}, dostępne pod adresem: \url{http://rubyonrails.org/doctrine/}, aktualne na dzień 1.05.2017r.
+
+  \bibitem{phoenix_doctrine}
+  McCord R., Tate B., Valim J., \emph{Programming Phoenix}, The Pragmatic Programmers LLC, 2016
 	\bibitem{cleancode}
 	Martin, R. \emph{Czysty kod. Podręcznik dobrego programisty}, Gliwice, Wydawnictwo Helion 2010
 
