@@ -216,7 +216,7 @@
     }
 
 %marginesy itp
-\topmargin -18mm
+\topmargin -10mm
 \addtolength{\headheight}{2pt}
 \headsep 3mm
 \oddsidemargin 0pt

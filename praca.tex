@@ -111,10 +111,26 @@ Zasada ta niesie za sobą korzyści w~sferze rozwoju frameworku. Jest tak, ponie
 \subsubsection{No one paradigm}
 Twórcy frameworka Ruby on Rails są przekonani, że nie istnieje jedno idealne rozwiązanie. Często do jednego celu można dojść różnymi drogami. Z~tego też powodu, pomimo wyboru architektury MVC, Railsy są bardzo elastyczne jeśli chodzi o~dostosowanie się do innych modeli projektowych. Domyślnie RoR nie posiada wbudowanych \textit{Serwisów} bądź \textit{Prezenterów}, lecz framework jest zbudowany w~taki sposób, aby użycie większości wzorców projektowych było bezproblemowe.
 
-Przystosowanie frameworku do korzystania z~różnych wzorców projektowych poniekąd wymusza na programistach znajomość większej ilości owych wzorców. Jako, że Ruby jest bardzo elastycznym językiem jeśli chodzi o paradygmaty programowania, ponieważ możliwe jest pisanie funkcyjne, Railsy również wspierają owe podejście, od programisty zależy czy z takiej możliwości skorzysta. Wprowadzenie takiej uniwersalności niestety niesie za sobą spory nakład pracy ze strony twórców.
+Przystosowanie frameworku do korzystania z~różnych wzorców projektowych poniekąd wymusza na programistach znajomość większej ilości owych wzorców. Jako, że Ruby jest bardzo elastycznym językiem jeśli chodzi o~paradygmaty programowania, ponieważ możliwe jest pisanie funkcyjne, Railsy również wspierają owe podejście. Od programisty zależy, czy z~takiej możliwości skorzysta. Wprowadzenie takiej uniwersalności niestety niesie za sobą spory nakład pracy ze strony twórców.
 
 \subsection{Pozostałe cechy}
-Poza cechami wymienionymi w \textit{The Ruby on Rails Doctrine}, 
+Poza cechami wymienionymi w \textit{The Ruby on Rails Doctrine}, Ruby on Rails kładzie mocny nacisk na inne aspekty. Są to m.in. kwestie takie, jak przestrzeganie reguły \textit{DRY} (ang. \textit{Don't Repeat Yourself}) bądź też wsparcie dla dodatkowych bibliotek rozszerzających funkcjonalność frameworku.
+
+\subsubsection{Don't Repeat Yourself}
+Reguła \textit{DRY} mówi o tym, aby, jak sama nazwa wskazuje, nie powtarzać kodu. Każde powtórzenie logiki biznesowej może być rozwiązane poprzez dodanie warstwy abstrakcji. Natomiast duplikację procesów można rozwiązać poprzez ich automatyzację \cite{dry}. Poprzez stosowanie tej reguły, kod aplikacji jest wyraźnie mniejszy, ale przede wszystkim jest on bardziej odporny na błędy i łatwiejszy w utrzymaniu. Jeśli w~powtarzającym się fragmencie kodu zostanie popełniony błąd, dzięki zastosowaniu reguły DRY, zmianę trzeba wprowadzić tylko w~jednym miejscu, a~nie w~każdym wystąpieniu powtarzającej się funkcji.
+
+Ruby on Rails wspiera używanie tej reguły poprzez wbudowane w framework elementy, takie jak \textit{Helpery}, \textit{Concerny} lub \textit{Partiale}. Umożliwiają one wspóldzielenie kodu i używanie ich w każdej z warstw aplikacji.
+
+\subsubsection{Biblioteki}
+Biblioteki tworzone przez społeczność nie są bezpośrednio elementem frameworku, ale samego języka Ruby. Ich nazwa to \textit{gem'y}. Rails'y natomiast mają domyślnie dołączony menedżer bibliotek/pakietów - \textit{bundler}.
+
+\begin{figure}[h]
+  \includegraphics[width=\linewidth]{images/bundler_stats}
+  \caption{Statystyki pobrań menedżera pakietów bundler.}
+  \label{fig:bundler_stats}
+\end{figure}
+
+Jak widać, \textit{bundler} jest najczęściej pobieranym \textit{gem'em} spośród wszystkich, z ilością pobrań przekraczającą 162,5 miliona. Ogromny wpływ na taki wynik mają oczywiście Rails'y. Strona \url{https://rubygems.org/}, która jest źródłem większości bibliotek, w statystykach podaje, że dostępnych jest ponad 131,600 paczek. Pokazuje to jak ważną częścią dla twórców Ruby on Rails i całej społeczności jest możliwość tworzenia rozszerzeń oraz ich dostępność.
 
 \section{Phoenix} % https://media.pragprog.com/titles/phoenix/intro.pdf   http://www.phoenixframework.org/docs/resources
 \section{Express}
@@ -157,16 +173,16 @@ Poza cechami wymienionymi w \textit{The Ruby on Rails Doctrine},
 	\addcontentsline{toc}{chapter}{Literatura}
 
   \bibitem{historia}
-  \emph{Historia Internetu}, dostępne pod adresem: \url{https://pl.wikipedia.org/wiki/Historia_Internetu}, aktualne na dzień 1.04.2017r.
+  \emph{Historia Internetu}, dostęp pod adresem: \url{https://pl.wikipedia.org/wiki/Historia_Internetu}, aktualne na dzień 1.04.2017r.
 
   \bibitem{framework}
-  \emph{Software framework}, dostępne pod adresem: \url{https://en.wikipedia.org/wiki/Software_framework}, aktualne na dzień 1.04.2017r.
+  \emph{Software framework}, dostęp pod adresem: \url{https://en.wikipedia.org/wiki/Software_framework}, aktualne na dzień 1.04.2017r.
 
 	\bibitem{rails_guide}
-	\emph{Ruby on Rails Guides}, dostępne pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2017r.
+	\emph{Ruby on Rails Guides}, dostęp pod adresem: \url{http://guides.rubyonrails.org/},\\ aktualne na dzień 14.06.2017r.
 
   \bibitem{rails_doctrine}
-  \emph{Ruby on Rails Doctrine}, dostępne pod adresem: \url{http://rubyonrails.org/doctrine/}, aktualne na dzień 1.05.2017r.
+  \emph{Ruby on Rails Doctrine}, dostęp pod adresem: \url{http://rubyonrails.org/doctrine/}, aktualne na dzień 1.05.2017r.
 
   \bibitem{phoenix_doctrine}
   McCord R., Tate B., Valim J., \emph{Programming Phoenix}, The Pragmatic Programmers LLC, 2016
@@ -175,6 +191,9 @@ Poza cechami wymienionymi w \textit{The Ruby on Rails Doctrine},
 
   \bibitem{benchmarking_tools}
   Diwan, A. \emph{Tools for Testing Website Performance}, dostęp pod adresem: \url{https://www.sitepoint.com/tools-testing-website-performance/}, \\ aktualne na dzień 18.03.2017r.
+
+  \bibitem{dry}
+  \emph{Don't Repeat Yourself}, dostęp pod adresem: \url{http://deviq.com/don-t-repeat-yourself/}, aktualne na dzień 3.05.2017r.
 
 \end{thebibliography}
 \end{document}
