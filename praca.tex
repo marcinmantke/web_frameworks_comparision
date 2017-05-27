@@ -10,6 +10,8 @@
 \linespread{1.3}
 \usepackage{indentfirst}
 \usepackage{caption}
+\usepackage{subcaption}
+
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -47,9 +49,23 @@ Ilość dostępnych frameworków pokazuje jak ważnym elementem stały się one 
 Jako że framework dodaje do aplikacji pewną warstwę abstrakcji, czyli kod, naturalny jest narzut wydajnościowy na aplikację. z~tego powodu, poza różnymi cechami odnośnie budowy i~dostarczanych funkcjonalności, frameworki różnią się również wydajnością.
 
 \section{Cel pracy}
+Celem niniejszej pracy jest dokonanie analizy porównawczej wybranych frameworków webowych. Analiza ta ma posłużyć do wyciągnięcia wniosków na temat cech poszczególnych rozwiązań, a także ich wydajności. Dokumentacja zawiera opis implementacji testowej aplikacji przy pomocy każdego z frameworków oraz wnioski z analizy testów.
 
-\section{Wymagania}
-\section{Zarys koncepcji}
+Aby poprawnie zrealizować cel pracy, stworzono aplikację testową. W celu urzeczywistnienia problemu, który rozwiązuje owa aplikacja, postanowiono stworzyć rozwiązanie umożliwiające zarządzanie inteligentnym domem. Aplikacja ta pełni rolę jednostki zarządzającej podzespołami inteligentnego domu oraz zbierającej dane z czujników. Spełnia ona następujące wymagania funkcjonalne:
+\begin{itemize}
+  \item rejestracja i logowanie użytkowników,
+  \item przetwarzanie danych w tle,
+  \item możliwość dodawania, edycji oraz usuwania sensorów,
+  \item możliwość dodawania oraz usuwania danych z sensorów,
+  \item przypisywanie danych do sensorów.
+\end{itemize}
+
+Aplikacja spełnia również następujące wymagania niefunkcjonalne:
+\begin{itemize}
+  \item połączenie z bazą danych PostgreSQL,
+  \item zapewnienie skalowalności aplikacji,
+  \item posiadanie testów jednostkowych.
+\end{itemize}
 
 \chapter{Przedstawienie omawianych technologii}
 \section{Historia i~rozwój technologii webowych}
@@ -57,11 +73,74 @@ Od lat 90 XX wieku świat obserwuje bardzo dynamiczny rozwój technologii związ
 
 Wraz ze wzrostem dostępu ludzi do Internetu rozwijały się technologie odpowiedzialne za strony internetowe. Za punkt początkowy istnienia nie stron, a~aplikacji internetowych, można przyjać rok 1997 i~powstanie języka \emph{PHP}. Był to pierwszy interpretowany skryptowy język programowania, który służył do budowania aplikacji internetowych działających w~czasie rzeczywistym. Wraz z~rozwojem języka PHP oraz innych, podobnych mu języków, np. \emph{Python} i~\emph{Ruby}, zmienił się sposób budowania aplikacji. Programiści zaczęli rezygnować ze standardowych klientów w~postaci aplikacji desktopowych i~przechodzili na tzw. cienkich klientów (ang. \textit{thin client}). Trend ten przyspiesza rozwój oraz różnorodność aplikacji serwerowych posiadających interfejs graficzny w~formie strony internetowej, które nazywane są aplikacjami internetowymi \cite{historia}.
 
-\section{Aplikacja internetowa}
+\section{Wykorzysywane pojęcia i terminy}
+\subsection{Aplikacja internetowa}
 Aplikacja internetowa (webowa) jest aplikacją znajdującą się nie na komputerze użytkownika, lecz na ogólnodostępnym serwerze. Komunikacja pomiędzy, niekiedy rozproszonymi, elementami aplikacji odbywa się poprzez sieć komputerową. Aplikacja webowa swój interfejs graficzny poprzez przeglądarkę internetową bądź np. aplikację mobilną.
 
-\section{Framework webowy} % moduły i~biblioteki, np do połączenia z~bazą danych
+\subsection{Framework webowy} % moduły i~biblioteki, np do połączenia z~bazą danych
 Aby ułatwić korzystanie z~coraz liczniejszych technologii wykorzystywanych w~tworzeniu aplikacji internetowych, powstały narzędzia nazywane frameworkami webowymi. Framework jest uniwersalnym środowiskiem programistycznym, które dostarcza niezbędne narzędzia wymagane do stworzenia aplikacji internetowej w~wybranym języku programowania \cite{framework}. Każdy z~frameworków dostarcza pewną abstrakcję, która znajduje się wokół kodu napisanego przez programistę. Przykładem takiej abstrakcji jest system mapowania ścieżki podstrony (np. \textit{/users/3}) na konkretną akcję w~aplikacji (zwykle akcja \emph{SHOW} dla kontrolera \emph{Users}), czyli \emph{routing}. Twórcy frameworków zauważyli, że w~każdej aplikacji webowej są stosowane te same typy rozwiązań, więc w~wielu przypadkach wprowadzili dane rozwiązania jako integralne części frameworków. W~efekcie programiści mogą korzystać z~gotowych, dogłębnie przetestowanych rozwiązań, które znajdują się w~90\% aplikacji webowych.
+
+\subsection{Wirtualizacja, kontener} % https://dsg.cs.put.poznan.pl/wiki/_media/workshop/docker-skisr.pdf
+W celu zapewnienia izolacji środowiska działania aplikacji, stosuję się technikę nazywaną wirtualizacją. Polega ona na stworzeniu wirtualnej maszyny, bądź też kontenera, gdzie uruchamiana jest aplikacja. Rozwiązania te, pomimo osiągania podobnego efektu, różnią się pomiędzy sobą pod wieloma względami.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[width=.6\linewidth]{images/docker_container}
+    \label{fig:docker_container}
+  \end{subfigure}%
+  \begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[width=.6\linewidth]{images/docker_vm}
+    \label{fig:docker_vm}
+  \end{subfigure}
+  \caption{Porównanie kontenerów i wirtualnej maszyny.}
+\end{figure}
+
+Korzystając z informacji zawartych w dokumentacji Docker'a \cite{docker_what_container}, można wykazać następujące cechy obu rozwiązań:
+
+\begin{itemize}
+  \item maszyny wirtualne:
+  \begin{itemize}
+    \item abstrakcja w warstwie sprzętowej, która zmienia jeden serwer w wiele serwerów,
+    \item hipernadzorca (ang. \textit{hypervisor}) pozwala na pracę wielu wirtualnych maszyn na jednej maszynie fizycznej,
+    \item każda maszyna wirtualna posiada pełną kopię systemu operacyjnego, aplikacji, niezbędnych bibliotek i ich zależności, przez co zajmuje dużo miejsca na dysku twardym,
+    \item maszyny wirtualne zwykle długo się uruchamiają.
+  \end{itemize}
+
+  \item kontenery:
+  \begin{itemize}
+    \item abstrakcja w warstwie aplikacji, która łączy kod z jego zależnościami,
+    \item na jednej maszynie może być uruchomionych wiele kontenerów, które wspóldzielą kernel,
+    \item każdy z kontenerów jest osobnym procesem w przestrzeni użytkownika,
+    \item kontenery zajmują mniej miejsca na dysku i uruchamiają się dużo szybciej, niż maszyny wirtualne.
+  \end{itemize}
+\end{itemize}
+
+Powyższe zestawienie należy uzupełnić o informacje znajdujące się w prezentacji Łukasza Piątkowskiego \cite{docker_prez}:
+\begin{itemize}
+  \item maszyny wirtualne:
+  \begin{itemize}
+    \item wirtualizacja sprzętu - degradacja wydajności,
+    \item własny kernel,
+    \item pełna maszyna,
+  \end{itemize}
+
+  \item kontenery:
+  \begin{itemize}
+    \item \textit{chroot} z większymi możliwościami,
+    \item wspólny kernel,
+    \item własne zasoby pamięci, dysku, I/O.
+  \end{itemize}
+\end{itemize}
+
+Analizując cechy obu rozwiązań można stwierdzić, że kontenery mają sporą przewagę w ważnych kwestiach (wydajność, szybkość uruchamiania, wymagane zasoby) nad maszynami wirtualnymi, dlatego też stają się coraz bardziej popularne.
+
+Ze strony programisty, otrzymuje on nową instancję wybranego systemu, gdzie zainstalowane są jedynie zależności wymagane przez daną aplikację. Prowadzi to do odizolowania środowiska aplikacji, przez co znacząco minimalizowane jest ryzyko wystąpienia konfliktów pomiędzy aplikacjami, aplikację można w bardzo prosty sposób przenieść na inną maszynę i uruchomić ją jedną komendą.
+
+\subsection{CRUD}
+CRUD, to cztery podstawowe funkcje w aplikacjach korzystających z pamięci trwałej, które umożliwiają zarządzanie nią \cite{wiki_crud}. Akronim ten powstał od pierwszych liter słów \textbf{C}reate, \textbf{R}ead, \textbf{U}pdate i \textbf{D}elete. Określa on udostępnienie użytkownikowi bądź aplikacji zestaw operacji (stworzenie, odczytanie, aktualizacja oraz usunięcie) na danym obiekcie.
 
 \chapter{Przegląd wybranych rozwiązań}
 \section{Ruby on Rails}
@@ -125,6 +204,7 @@ Ruby on Rails wspiera używanie tej reguły poprzez wbudowane w framework elemen
 Biblioteki tworzone przez społeczność nie są bezpośrednio elementem frameworku, ale samego języka Ruby. Ich nazwa to \textit{gem'y}. Rails'y natomiast mają domyślnie dołączony menedżer bibliotek/pakietów - \textit{bundler}.
 
 \begin{figure}[h]
+  \centering
   \includegraphics[width=\linewidth]{images/bundler_stats}
   \caption{Statystyki pobrań menedżera pakietów bundler.}
   \label{fig:bundler_stats}
@@ -133,6 +213,58 @@ Biblioteki tworzone przez społeczność nie są bezpośrednio elementem framewo
 Jak widać, \textit{bundler} jest najczęściej pobieranym \textit{gem'em} spośród wszystkich, z ilością pobrań przekraczającą 162,5 miliona. Ogromny wpływ na taki wynik mają oczywiście Rails'y. Strona \url{https://rubygems.org/}, która jest źródłem większości bibliotek, w statystykach podaje, że dostępnych jest ponad 131,600 paczek. Pokazuje to jak ważną częścią dla twórców Ruby on Rails i całej społeczności jest możliwość tworzenia rozszerzeń oraz ich dostępność.
 
 \section{Phoenix} % https://media.pragprog.com/titles/phoenix/intro.pdf   http://www.phoenixframework.org/docs/resources
+
+\textit{Phoenix} jest open source'owym frameworkiem webowym napisanym w języku \textit{Elixir}. Inicjatorem tego projektu jest amerykanin Chris McCord. Pierwsza wersja \textit{Phoenix'a} została wydana 28 sierpnia 2015 roku, a więc jest to bardzo młody framework. Pomimo swojego młodego wieku, framework ten zyskał sporą popularność i zainteresowanie społeczności. Jest to spowodowane ideą frameworku, który nie stara się być na siłę inny od istniejących rozwiązań, a zamiast tego stara się wykorzystywać ich najlepsze elementy. Jako przykładowe frameworki, z których czerpie \textit{Phoenix}, wymieniane są \textit{Ruby on Rails} oraz \textit{Django} \cite{phoenix_docs}.
+
+Tak, jak większość frameworków webowych, \textit{Phoenix} implementuje wzorzec \textit{Model-View-Controller}.
+
+Idea działania \textit{Phoenix'a} opiera się na kilku podstawowych założeniach:
+\begin{itemize}
+  \item szybkość działania,
+  \item współbieżność,
+  \item wygoda użytkowania,
+  \item interaktywność,
+  \item niezawodność.
+\end{itemize}
+
+\subsection{Szybkość działania}
+Położenie nacisku na szybkość działania aplikacji stworzonej przy pomocy frameworka jest czymś naturalnym. Zwykle jednak szybkość działania osiągana jest kosztem innych aspektów tworzenia aplikacji, jak na przykład szybkością powstawania oprogramowania. Aby osiągnąć zadowalającą szybkość działania, twórcy \textit{Phoenix'a} zdecydowali się stworzyć framework przy pomocy języka \textit{Elixir}. Wpływ tego języka na framework opisany jest szerzej w sekcji \ref{phoenix:elixir}.
+
+Poza samym językiem programowania, na szybkość działania aplikacji wpływ mają następujące rozwiązania:
+\begin{itemize}
+  \item router kompilowany jest do bardzo szybkiego w działaniu \textit{pattern matching'u}, czyli dopasowaniu do wzorca. Dzięki temu optymalizacja wydajności wykonywana jest jeszcze zanim zapytanie opuści router,
+  \item template'y są prekompilowane, \textit{Phoenix} nie musi kopiować łańcuchów tekstowych dla każdego wyświetlanego template'u, przez co możliwe jest bardzo wydajne cache'owanie.
+\end{itemize}
+
+\subsection{Współbieżność}
+\subsection{Wygoda użytkowania}
+\subsection{Interaktywność}
+\subsection{Niezawodność}
+
+
+\subsection{Elementy składowe}
+\textit{Phoenix} jest nadrzędną warstwą w wielowarstwowym systemie zaprojektowanym, aby być modularnym i elastycznym. Pozostałe warstwy zawierają narzędzia takie jak \textit{Plug} (odpowiedzialny za modularność), \textit{Ecto} (odpowiedzialny za interakcję z bazą danych), \textit{Cowboy} (serwer HTTP Erlanga) \cite{phoenix_docs}.
+
+Efektem połączenia wszystkich warstw są następujące elementy:
+\begin{itemize}
+  \item \textbf{endpoint}, który jako pierwszy zajmuje się zapytaniami, odpowiednio je obsługuje i przekazuje do routera,
+  \item \textbf{router} - parsuje przychodzące zapytania i przekierowuje je do odpowiednich kontrolerów i akcji,
+  \item \textbf{kontroler} - dostarcza on akcje, które obsługują zapytanie (przetwarzanie danych, przekazanie ich do widoków, generowanie HTML przekazywanych do przeglądarki),
+  \item \textbf{szablony} - w połączeniu z danymi oraz po pewnym przetworzeniu generują widoki,
+  \item \textbf{widoki}, które są warstwą prezentacji, czyli wizualnym efektem działania aplikacji,
+  \item \textbf{kanały} - zarządzają websocketami, które umożliwają komunikację w czasie rzeczywisttym pomiędzy serwerem, a klientem.
+\end{itemize}
+
+\subsection{Język programowania - Elixir} % https://elixir-lang.org/
+\label{phoenix:elixir}
+Podobnie, jak w przypadku \textit{Ruby on Rails}, duży wpływ na jakość użytkowania \textit{Phoenix'a} ma język programowania, w którym jest on stworzony. \textit{Elixir} jest kompilowanym językiem funkcyjnym, który uruchamiany jest na maszynie wirtualnej \textit{Erlanga}. Dodatkowo, jak piszą jego twórcy, jest językiem programowania zaprojektowanym do tworzenia skalowalnych i łatwych w utrzymaniu aplikacji \cite{elixir}.
+
+Wybór tego języka programowania umożliwia zrealizowanie jednych z podstawowych zadań \textit{Phoenix'a} - zapewnienie wysokiej wydajności oraz niezawodności.
+
+Dodatkowo twórcy zwracają uwagę na przyjazną składnię, co stanowczo ma wpływ na popularność frameworka. Jest tak, ponieważ programiści zwykle wolą czerpać przyjemność z używania ,,ładnego'' języka, niż uczyć się i używać mało przyjaznego języka programowania. \textit{Elixir}, jako pierwszy funkcyjny język programowania, wspiera makra z rodziny języków \textit{Lisp}, lecz robi to stosując bardziej naturalną składnię \cite{phoenix_doctrine}.
+
+
+
 \section{Express}
 
 \chapter{Analiza porównawcza}
@@ -151,7 +283,6 @@ Jak widać, \textit{bundler} jest najczęściej pobieranym \textit{gem'em} spoś
 \section{Plan prowadzenia eksperymentów}
 
 \section{Wykorzystane narzędzia}
-\subsection{Nginx}
 \subsection{Docker}
 \section{Benchmarki}
 % https://www.sitepoint.com/tools-testing-website-performance/
@@ -186,6 +317,10 @@ Jak widać, \textit{bundler} jest najczęściej pobieranym \textit{gem'em} spoś
 
   \bibitem{phoenix_doctrine}
   McCord R., Tate B., Valim J., \emph{Programming Phoenix}, The Pragmatic Programmers LLC, 2016
+
+  \bibitem{phoenix_docs}
+  \emph{Phoenix Guides}, dostęp pod adresem: \url{http://www.phoenixframework.org/docs/resources}, aktualne na dzień 6.05.2017r.
+
 	\bibitem{cleancode}
 	Martin, R. \emph{Czysty kod. Podręcznik dobrego programisty}, Gliwice, Wydawnictwo Helion 2010
 
@@ -194,6 +329,18 @@ Jak widać, \textit{bundler} jest najczęściej pobieranym \textit{gem'em} spoś
 
   \bibitem{dry}
   \emph{Don't Repeat Yourself}, dostęp pod adresem: \url{http://deviq.com/don-t-repeat-yourself/}, aktualne na dzień 3.05.2017r.
+
+  \bibitem{docker_what_container}
+  \emph{What is a Container}, dostęp pod adresem: \url{https://www.docker.com/what-container}, aktualne na dzień 27.05.2017r.
+
+  \bibitem{docker_prez}
+  \emph{Docker. Kontener aplikacyjny nie tylko dla programistów}, dostęp pod adresem: \url{https://dsg.cs.put.poznan.pl/wiki/_media/workshop/docker-skisr.pdf}, aktualne na dzień 27.05.2017r.
+
+  \bibitem{wiki_crud}
+  \emph{CRUD}, dostęp pod adresem: \url{https://pl.wikipedia.org/wiki/CRUD}, aktualne na dzień 27.05.2017r.
+
+  \bibitem{elixir}
+  \emph{Elixir Language}, dostęp pod adresem: \url{https://elixir-lang.org/}, aktualne na dzień 16.05.2017r.
 
 \end{thebibliography}
 \end{document}
