@@ -7,7 +7,7 @@
 \usepackage{listings}
 \usepackage{color}
 \frenchspacing
-\linespread{1.3}
+\linespread{1.5}
 \usepackage{indentfirst}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -28,7 +28,7 @@
 	stringstyle=\color{mymauve},     % string literal style
 }
 
-\author{Marcin Mantke}
+\author{inż. Marcin Mantke}
 \title{Analiza porównawcza popularnych frameworków webowych.}
 \engtitle{Comparative analysis of most popular web frameworks.}
 \supervisor{dr inż. Roman Ptak}
@@ -218,16 +218,16 @@ Jak widać, \textit{bundler} jest najczęściej pobieranym \textit{gem'em} spoś
 
 Tak, jak większość frameworków webowych, \textit{Phoenix} implementuje wzorzec \textit{Model-View-Controller}.
 
+\subsection{Podstawowe założenia}
 Idea działania \textit{Phoenix'a} opiera się na kilku podstawowych założeniach:
 \begin{itemize}
   \item szybkość działania,
   \item współbieżność,
   \item wygoda użytkowania,
-  \item interaktywność,
   \item niezawodność.
 \end{itemize}
 
-\subsection{Szybkość działania}
+\subsubsection{Szybkość działania}
 Położenie nacisku na szybkość działania aplikacji stworzonej przy pomocy frameworka jest czymś naturalnym. Zwykle jednak szybkość działania osiągana jest kosztem innych aspektów tworzenia aplikacji, jak na przykład szybkością powstawania oprogramowania. Aby osiągnąć zadowalającą szybkość działania, twórcy \textit{Phoenix'a} zdecydowali się stworzyć framework przy pomocy języka \textit{Elixir}. Wpływ tego języka na framework opisany jest szerzej w sekcji \ref{phoenix:elixir}.
 
 Poza samym językiem programowania, na szybkość działania aplikacji wpływ mają następujące rozwiązania:
@@ -236,11 +236,32 @@ Poza samym językiem programowania, na szybkość działania aplikacji wpływ ma
   \item template'y są prekompilowane, \textit{Phoenix} nie musi kopiować łańcuchów tekstowych dla każdego wyświetlanego template'u, przez co możliwe jest bardzo wydajne cache'owanie.
 \end{itemize}
 
-\subsection{Współbieżność}
-\subsection{Wygoda użytkowania}
-\subsection{Interaktywność}
-\subsection{Niezawodność}
+\subsubsection{Współbieżność}
+Wraz z rozwojem możliwości sprzętowych, a dokładniej z rosnącą liczbą rdzeni procesorów, możliwe jest coraz większe wykorzystanie współbieżności w aplikacjach internetowych. Większość frameworków opartych jest na językach obiektowych, co niestety generuje problemy w kwestii współbieżności. Jest tak, ponieważ aby skorzystać z mechanizmu współbieżności, programista musi taką funkcjonalność zaimplementować, oczywiście przy pomocy dostępnych w języku narzędzi. Niestety, współbieżność nie jest prostym zagadnieniem, posiada wiele pułapek, przez co programiści, jeśli nie muszą, zwykle z niej nie korzystają.
 
+Współbieżność, podobnie jak szybkość działania, jest cechą, która osiągnięta została poprzez wybór odpowiedniego języka programowania. \textit{Elixir}, jako język funkcyjny stworzony do tworzenia bardzo wielu procesów, w pełni spełnia wymogi stawiane przez twórców \textit{Phoenix'a}. Nie tylko posiada on bardzo wydajne mechanizmy zapewniające współbieżność, ale przede wszystkim bardzo ułatwia korzystanie z owej współbieżności. I owe ułatwienie pracy programisty jest ważnym czynnikiem popularności \textit{Phoenix'a}. Przykład łatwości korzystania z mechanizmu współbieżności znajduje się na listingu \ref{lst:phoenix_concurrency}, który pochodzi z pozycji literaturowej \cite{phoenix_doctrine}.
+
+\begin{lstlisting}[label={lst:phoenix_concurrency}, caption=Współbieżność w Phoenix'ie]
+company_task = Task.async(fn -> find_company(cid) end)
+user_task = Task.async(fn -> find_user(uid) end)
+cart_task = Task.async(fn -> find_cart(cart_id) end)
+
+company = Task.await(company_task)
+user = Task.await(user_task)
+cart = Task.await(cart_task)
+\end{lstlisting}
+
+Dzięki tak prostym interfejsom, wykonanie kodu z listingu \ref{lst:phoenix_concurrency} zajmie tyle, ile najdłuższe zapytanie do bazy danych, a nie łączny czas zapytań. Dzięki temu dużo lepiej wykorzystywana jest baza danych, co przekłada się na szybkość działania całej aplikacji.
+
+\subsubsection{Wygoda użytkowania}
+Wygoda użytkowania jest wypadkową wielu czynników. Z jednej strony jest to wybrany język programowania, który udostępnia programiście w przystępny sposób wiele zaawansowanych mechanizmów, ma ,,przyjazną'' składnię i jest dość prosty w nauce. Z drugiej strony \textit{Phoenix} w swoich założeniach chce się wzorować na innych frameworkach wykorzystując ich najlepsze elementy. Tak więc programista korzysta z rozwiązań, które mogą być mu znane z innych technologii, jak na przykład \textit{Django} lub \textit{Laravel}, co dodatkowo przyspiesza powstawanie aplikacji webowych.
+
+\subsubsection{Niezawodność}
+Niezawodność jest podstawą każdej aplikacji, nie tylko internetowej. Nawet najładniejszy, współbieżny i responsywny kod jest bezwartościowy, jeśli nie jest niezawodny. Aplikacje pisane w \textit{Erlang'u} zawsze były bardziej niezawodne od innych, głównie poprzez strukturę linkowania procesów oraz komunikację pomiędzy procesami, co pozwala na efektywną pracę \textit{supervisor'a} \cite{phoenix_doctrine}.
+
+Po raz kolejny jedno z głównych założeń frameworka jest głęboko zakorzenione w przeznaczeniu języka programowania. Wysoka niezawodność jest oczywiście celem praktycznie wszystkich aplikacji, ponieważ błędy aplikacji są bardzo kosztowne dla ich właścicieli.
+
+Dla programistów niezawodność fundamentów, na których budują funkcjonalność aplikacji, jest nieoceniona. Dużo łatwiej tworzy się aplikację mając pewność, że abstrakcje nałożone przez framework są wydajne i niezawodne, przez co można skupić się na tworzeniu funkcjonalności.
 
 \subsection{Elementy składowe}
 \textit{Phoenix} jest nadrzędną warstwą w wielowarstwowym systemie zaprojektowanym, aby być modularnym i elastycznym. Pozostałe warstwy zawierają narzędzia takie jak \textit{Plug} (odpowiedzialny za modularność), \textit{Ecto} (odpowiedzialny za interakcję z bazą danych), \textit{Cowboy} (serwer HTTP Erlanga) \cite{phoenix_docs}.
@@ -263,15 +284,101 @@ Wybór tego języka programowania umożliwia zrealizowanie jednych z podstawowyc
 
 Dodatkowo twórcy zwracają uwagę na przyjazną składnię, co stanowczo ma wpływ na popularność frameworka. Jest tak, ponieważ programiści zwykle wolą czerpać przyjemność z używania ,,ładnego'' języka, niż uczyć się i używać mało przyjaznego języka programowania. \textit{Elixir}, jako pierwszy funkcyjny język programowania, wspiera makra z rodziny języków \textit{Lisp}, lecz robi to stosując bardziej naturalną składnię \cite{phoenix_doctrine}.
 
+\subsection{Pozostałe cechy}
+\subsubsection{Biblioteki}
+Idea centralnego repozytorium paczek jest bardzo popularna wśród większości języków programowania. Ułatwia ono pracę w aplikacją, dodawanie nowych zależności nie jest problematyczne, a błędy dotyczące niezgodności wersji zależności są wyeliminowane. Dla języka \textit{Elixir} domyślnym menadżerem paczek jest \textit{Hex}.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.4\linewidth]{images/hex_stats}
+  \caption{Statystyki pobrań menedżera pakietów Hex.}
+  \label{fig:hex_stats}
+\end{figure}
+
+W momencie powstawania niniejszej pracy, dostępnych jest ok 4,5 tysiąca bibliotek w oficjalnym repozytorium  \textit{Hex}. W porównaniu do innych, będących na rynku dłużej języków i frameworków, jest to niewielka liczba. Biorąc natomiast pod uwagę rosnącą popularność \textit{Phoenix'a}, można założyć iż ta liczba będzie rosnąć. Obecnie istniejące paczki są niekiedy odpowiednikami istniejących już paczek napisanych w innych językach. Niestety, bardzo często paczki te, z racji na krótki okres istnienia, są mocno niedopracowane.
 
 \section{Express}
+\textit{Express} jest minimalistycznym i bardzo elastycznym frameworkiem webowym. Framework ten powstał poprzez dostarczenie wrapperów dla API udostępnianego przez platformę \textit{Node.js}. \textit{Express}, ze względu na swoją budowę, można traktować jako podstawę do budowy innych frameworków. Framework ten jest dostępny jako wolne oprogramowanie pod licencją MIT i komercyjnie wspierany jest przez firmę \textit{StrongLoop}. \textit{Express} nie jest frameworkiem typu \textit{full-stack}, jest on nastawiony na możliwość dowolnej konfiguracji zależności niezbędnych w projekcie.
+
+\subsection{Podstawowe założenia}
+% http://noeticforce.com/best-nodejs-frameworks-for-web-and-app-development
+% Sinatra inspired!!!
+Pierwotną ideą powstania \textit{Express'a} była chęć stworzenia frameworka podobnego do istniejącego w języku programowania \textit{Ruby} frameworka \textit{Sinatra}. Z tego względu oba te frameworki współdzielą podejście do rozwiązywania problemów oraz struktury kodu.
+
+\subsubsection{Configuration over convention}
+Głównym założeniem frameworka \textit{Express} jest dostarczenie programistom pełnej elastyczności i możliwości wyboru poszczególnych składowych aplikacji. W skład frameworku nie wchodzą więc biblioteki odpowiedzialne m.in. za:
+\begin{itemize}
+  \item komunikację z bazą danych,
+  \item autentykację użytkowników,
+  \item silnik szablonów.
+\end{itemize}
+
+Zastosowanie podejścia \textit{configuration over convention} może być problematyczne w przypadku rozpoczynania swojej przygody z \textit{Express'em}. W sytuacji, kiedy framework nie dostarcza wbudowanych mechanizmów, jak np. wcześniej wymieniony adapter do bazy danych, programista nie znający dostępnych bibliotek może mieć duże problemy z wyborem odpowiedniego mechanizmu.
+
+\subsubsection{Organizacja struktury aplikacji}
+Ze względu na podejście \textit{convention over configuration}, \textit{Express} nie narzuca programistom konkretnej struktury aplikacji. W żaden sposób nie jest wyróżnione podejście, które najczęściej można spotkać w aplikacjach webowych, czyli \textit{Model-View-Controller}. Programista może wybrać dowolny wzorzec projektowy, bądź też nie zastosować żadnego, jeśli taka jest jego wola.
+
+\subsection{Podstawa dla innych frameworków}
+% typy zbudowanych frameworków + nazwy
+\textit{Express} bez żadnych dodatkowych bibliotek, czyli od razu po instalacji, nie dostarcza wielu, niekiedy ważnych, funkcjonalności. Programiści korzystający z tego frameworka potrzebowali jednak tych samych narzędzi w przypadku tworzenia aplikacji tego samego typu. W momencie, kiedy za każdym razem musieli dołączać do projektu i konfigurować te same biblioteki, zaczęły powstawać bardziej ,,kompletne'' frameworki, które bazowały na \textit{Expressie}. W ten sposób powstały następujące frameworki:
+\begin{itemize}
+  \item LoopBack - stworzony do budowy REST API,
+  \item ItemsAPI - framework łączący funkcjonalność \textit{Elastichsearch'a} i \textit{Express'a},
+  \item KeystoneJS - \textit{Content Management System},
+  \item MEAN - framework typu full-stack,
+  \item Feathers - stworzony do budowy REST API,
+  \item Sails.js - framework MVC typu full-stack,
+  \item Hydra-Express - framework stworzony do architektury mikroserwisów.
+\end{itemize}
+
+\subsection{Biblioteki}
+Większość języków programowania posiada swój menedżer paczek, nie inaczej jest w przypadku języka \textit{JavaScript}. W tym środowisku największą popularność zyskał \textit{npm}. Jako, że \textit{npm} jest menedżerem paczek języka, a nie frameworka, można tam oczywiście znaleźć paczki niekompatybilne z \textit{Expressem}, lecz jest to cecha wszystkich menedżerów stworzonych dla konkretnego języka programowania.
+
+Na oficjalnej stronie \textit{npm} \cite{npm_site} przeczytać można, że dostępnych jest ponad 470 tysięcy paczek. Z repozytorium \textit{npm} tygodniowo pobieranych jest 2 365 813 490 paczek.
 
 \chapter{Analiza porównawcza}
-\section{Opisowe porównanie charakterystyki wybranych frameworków}
-\subsection{Ruby on Rails vs Phoenix}
-\subsection{Ruby on Rails vs Express}
-\subsection{Phoenix vs Express}
+\section{Opisowe porównanie charakterystyk wybranych frameworków}
+Naturalnym jest, że frameworki webowe różnią się od siebie pod wieloma względami. Różnice można zauważać od samego początku, czyli idei powstania, poprzez podejście do programisty, na sposobie działania i wydajności kończac. Zwykle przyczyną różnorodności jest sama filozofia frameworka, dążenie do doskonałości. Nie jest możliwe osiągnięcie optymalnych wartości w każdej z dziedzin, które frameworki obejmują, przez co twórcy muszą iść na większe bądź mniejsze kompromisy. Niekiedy owe różnice nie pojawiają się z przymusu, ale z przyjęcia konkretnych założeń.
+
+Są jednak sytuacje, kiedy frameworki są do siebie bardzo podobne. Zwykle są to sytuacje, kiedy framework z jednego języka programowania przenoszony jest do innego języka. Tak było w przypadku opisywanego \textit{Express'a}, który powstał jako odzwierciedlenie frameworka \textit{Sinatra}. Innym przypadkiem występowania podobieństw jest chęć wykorzystania jakiegoś fragmentu frameworka, który uznawany jest za standard i bez którego programista musi posiadać większą wiedzę aby odpowiednio wykorzystywać framework.\\
+
+W kolejnych podrozdziałach zostaną przedstawione porównania wybranych frameworków na zasadzie \textit{,,każdy z każdym''}. Poza podobieństwami i różnicami w budowie oraz idei działania, zamieszczona została subiektywna opinia autora na temat sytuacji, w których jeden framework ma przewagę nad drugim.
+
+\section{Ruby on Rails vs Phoenix}
+Jako pierwsze analizie porównawczej zostaną poddane najstarszy i najmłodszy framework spośród opisywanych, czyli \textit{Ruby on Rails} oraz \textit{Phoenix}. Owa różnica ,,wieku'' mocno rzutuje na całokształ tych frameworków.  Pierwszy ma już stabilną, wręcz nienaruszalną, pozyję na rynku, bardzo dużą społeczność oraz niezliczoną ilość materiałów dostępnych w Internecie.
+Drugi natomiast, co oczywiście jest efektem wielu składowych, ma spory potencjał. Oczywiście nie jest to pierwszy, ani jedyny, framework, który owy potencjał posiada. Jednakże w przypadku \textit{Phoenix'a} jest duża szansa, iż będzie on wykorzystany. Przyczynić się do tego może środowisko programistów \textit{Ruby on Rails}, ponieważ już teraz duża ilość programistów albo mocno się \textit{Phoenixem} interesuje, albo zdecydowało się zmienić technologię na \textit{Elixir'a} i \textit{Phoenix'a}.
+
+% !!filozofia działania
+% idea powstania
+% !!architektura, elementy składowe
+% !!wygoda użytkowania
+% szybkość powstawania aplikacji
+% !!dostępność najczęściej wykorzystywanych bibliotek (system użytkowników, zapisywanie plików w chmurze, przetwarzanie w tle)
+% testowanie aplikacji
+
+\subsection{Filozofia działania}
+\textit{Ruby on Rails} oraz \textit{Phoenix} posiadają elementy wspólne jeśli chodzi o sposób działania. Jest to spowodowane faktem, iż z założenia \textit{Phoenix} miał wykorzystywać najlepsze elementy z innych frameworków.
+
+Jeśli chodzi o filozofię działania, oba frameworki są zgodne w kwestii chęci ułatwienia pracy programistom. 
+\subsection{Architektura aplikacji, elementy składowe}
+\subsection{Wygoda użytkowania}
+\subsection{Dostępność najczęściej wykorzystywanych bibliotek}
+\subsection{Subiektywna opinia}
+
+\section{Ruby on Rails vs Express}
+\subsection{Filozofia działania}
+\subsection{Architektura aplikacji, elementy składowe}
+\subsection{Wygoda użytkowania}
+\subsection{Dostępność najczęściej wykorzystywanych bibliotek}
+\subsection{Subiektywna opinia}
+
+\section{Phoenix vs Express}
+\subsection{Filozofia działania}
+\subsection{Architektura aplikacji, elementy składowe}
+\subsection{Wygoda użytkowania}
+\subsection{Dostępność najczęściej wykorzystywanych bibliotek}
+\subsection{Subiektywna opinia}
+
 \section{Subiektywna ocena}
 
 \chapter{Implementacja}
@@ -341,6 +448,19 @@ Dodatkowo twórcy zwracają uwagę na przyjazną składnię, co stanowczo ma wp�
 
   \bibitem{elixir}
   \emph{Elixir Language}, dostęp pod adresem: \url{https://elixir-lang.org/}, aktualne na dzień 16.05.2017r.
+
+  \bibitem{elixir_medium}
+  Mazaika, K. \emph{Why I'm betting on Elixir}, dostęp pod adresem: \url{https://medium.com/@kenmazaika/why-im-betting-on-elixir-7c8f847b58}, aktualne na dzień 28.05.2017r.
+
+  \bibitem{express}
+  \emph{Express Guides}, dostęp pod adresem: \url{https://expressjs.com/}, aktualne na dzień 10.06.2017r.
+
+  \bibitem{express_pro}
+  % http://www.apress.com/gp/book/9781484200384
+  Mardanm A. \emph{Pro Express.js}, Apress, 2014
+
+  \bibitem{npm_site}
+  \emph{npm Homepage}, dostęp pod adresem: \url{https://www.npmjs.com/}, aktualne na dzień 10.06.2017r.
 
 \end{thebibliography}
 \end{document}
