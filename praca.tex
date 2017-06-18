@@ -359,25 +359,61 @@ Drugi natomiast, co oczywiście jest efektem wielu składowych, ma spory potencj
 \subsection{Filozofia działania}
 \textit{Ruby on Rails} oraz \textit{Phoenix} posiadają elementy wspólne jeśli chodzi o sposób działania. Jest to spowodowane faktem, iż z założenia \textit{Phoenix} miał wykorzystywać najlepsze elementy z innych frameworków.
 
-Jeśli chodzi o filozofię działania, oba frameworki są zgodne w kwestii chęci ułatwienia pracy programistom. 
+Jeśli chodzi o filozofię działania, oba frameworki są zgodne w kwestii chęci ułatwienia pracy programistom. Zarówno \textit{Ruby on Rails}, jak i \textit{Phoenix}, mocno uwypuklają przyjemność korzystania z języków programowania, na których są oparte. Twórcy \textit{Ruby on Rails} zapoczątkowali trend stawiania na przyjemność użytkowania w świecie frameworków webowych, natomiast twórcy \textit{Phoenix} bardzo dobrze to zaimplementowali w swoim frameworku. Z tego też powodu spora część programistów \textit{Ruby on Rails} interesuje się rozwojem \textit{Phoenix'a}.\\
+
+Podstawową różnicą w filozofii działania jest kwestia szybkości działania. Twórca \textit{Ruby on Rails} nie poświęcił ani jednego punktu w \emph{,,The Ruby on Rails Doctrine''} \cite{rails_doctrine}. Można z tego faktu wyciągnąć wniosek, że szybkość działania \textbf{nie jest} kluczowa dla tego frameworka. I powszechna opinia na temat \textit{Rails'ów} to potwierdzi. Nie zmienia to jednak faktu, że wiele bardzo dużych portali opartych jest na \textit{Ruby on Rails}. Przykładami mogą być \textit{GitHub}, \textit{Groupon}, \textit{AirBnB} czy \textit{Kickstarter}. Framework ten jest natomiast idealnym narzędziem do szybkiego tworzenia aplikacji. \textit{Ruby on Rails} na pewno zyskało wielu użytkowników ze względu na szybkość prototypowania, co jest bardzo istotne w dobie \textit{start-up'ów}.
+
+Dla odmiany, \textit{Phoenix} szczyci się swoją wysoką wydajnością. Jest to jeden z filarów tego frameworka. Co ciekawe, pomimo postawienia na szybkość działania, nie ucierpiała na tym szybkość prototypowania. Powodów takiego stanu rzeczy po raz kolejny można doszukiwać się w języku programowania, na którym oparty jest \textit{Phoenix}. Tworzy to sporą przewagę nad \textit{Ruby on Rails} w przypadkach, gdzie poza szybkością powstania aplikacji równie ważna jest jej wydajność.
+
 \subsection{Architektura aplikacji, elementy składowe}
-\subsection{Wygoda użytkowania}
-\subsection{Dostępność najczęściej wykorzystywanych bibliotek}
-\subsection{Subiektywna opinia}
+Zarówno \textit{Ruby on Rails}, jak i \textit{Phoenix} są frameworkami typu full-stack. Oznacza to, że dostarczane są z mechanizmami odpowiedzialnymi za:
+\begin{itemize}
+  \item serwer http - przy pomocy którego można uruchomić aplikację w środowisku developerskim,
+  \item generowanie struktury projektu (architektura MVC),
+  \item połączenie z bazą danych - adaptery do różnych typów baz danych, ORM,
+  \item router aplikacji - odpowiedzialny za przekierowywanie zapytań do odpowiednich akcji kontrolerów,
+  \item podstawowe mechanizmy bezpieczeństwa (mechanizm sesji, bezpieczne ciasteczka),
+  \item silniki szablonów - Slim, HAML,
+  \item wysyłanie wiadomości e-mail z aplikacji - należy jedynie skonfigurować serwer SMTP z którego ma korzystać aplikacja.
+\end{itemize}
+
+Wykorzystywana w obu frameworkach architektura została pokazana na rysunku \ref{fig:rails_architecture}.
+\newpage
+% http://www.sentex.net/~pkomisar/Ruby/Rails2.png (?)
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{images/rails_architecture}
+  \caption{Architektura Ruby on Rails.}
+  \label{fig:rails_architecture}
+\end{figure}
+
+\subsection{Wygoda użytkowania, szybkość powstawania aplikacji}
+W kwestii wygody użytkowania oba frameworki są na podobnym poziomie. Zarówno \textit{Ruby on Rails} jak i \textit{Phoenix} są stworzone w taki sposób, aby ułatwić prototypowanie aplikacji. Dzięki temu odczucia z użytkowania obu są bardzo przyjemne. Aplikacje można tworzyć relatywnie szybko, frameworki posiadają praktycznie wszystkie niezbędne mechanizmy, które wykorzystywane są w większości aplikacji webowych.
+
+Przykładowe mechanizmy, które były brane pod uwagę:
+\begin{itemize}
+  \item przetwarzanie danych w tle - w przypadku \textit{Ruby on Rails} jest to \textit{Sidekiq}, jego odpowiednikiem w \textit{Phoenix'ie} jest \textit{Akira},
+  \item autentykacja/autoryzacja użytkowników, zarządzanie sesją - \textit{Devise} dla \textit{RoR} oraz \textit{Addict} dla \textit{Phoenix'a},
+  \item wsparcie dla js'ów
+  \item wsparcie dla różnych silników szablonów
+  \item wsparcie dla różnych preprocesorów styli (sass, less)
+\end{itemize}
+
+Istnieje jednak pewna różnica, która może mieć wpływ na wygodę programisty, a jest nim rodzaj języka programowania. Dużo bardziej popularne jest podejście obiektowe, na którym oparty jest \textit{Ruby}. \textit{Elixir} natomiast jest językiem funkcyjnym. Paradygmat funkcyjny różni się znacznie od obiektowego, przez co w przypadku braku znajomości tego paradygmatu, używanie \textit{Phoenix'a} może być dużo trudniejsze. Zasada ta działa oczywiście w dwie strony i jeśli ktoś nie zna podejścia obiektowego, korzystanie z \textit{Ruby on Rails} również może być utrudnione.
 
 \section{Ruby on Rails vs Express}
 \subsection{Filozofia działania}
 \subsection{Architektura aplikacji, elementy składowe}
 \subsection{Wygoda użytkowania}
-\subsection{Dostępność najczęściej wykorzystywanych bibliotek}
+\subsection{Dostępność najczęściej wykorzystywanych mechanizmów}
 \subsection{Subiektywna opinia}
 
 \section{Phoenix vs Express}
 \subsection{Filozofia działania}
 \subsection{Architektura aplikacji, elementy składowe}
-\subsection{Wygoda użytkowania}
-\subsection{Dostępność najczęściej wykorzystywanych bibliotek}
-\subsection{Subiektywna opinia}
+\subsection{Wygoda użytkowania} % ew zmiana nazwy
+\subsection{Dostępność najczęściej wykorzystywanych mechanizmów}
+\subsection{Subiektywna opinia} % podsumowanie
 
 \section{Subiektywna ocena}
 
