@@ -36,9 +36,19 @@
 \specialisation{Inżynieria systemów informatycznych (INS)}
 \date{2017}
 
+\renewcommand\lstlistlistingname{Spis listingów}
+
 \begin{document}
 \maketitle
 \tableofcontents
+
+\listoffigures
+\listoftables
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{\listfigurename}
+\addcontentsline{toc}{chapter}{\listtablename}
+\addcontentsline{toc}{chapter}{\lstlistlistingname}
+
 % dodać rozdział z~wstępem teoretycznym, teoria do metod porównywania (5 rozdzial)
 \chapter{Wstęp}
 \section{Ogólny opis pracy}
@@ -337,7 +347,6 @@ Większość języków programowania posiada swój menedżer paczek, nie inaczej
 Na oficjalnej stronie \textit{npm} \cite{npm_site} przeczytać można, że dostępnych jest ponad 470 tysięcy paczek. Z repozytorium \textit{npm} tygodniowo pobieranych jest 2 365 813 490 paczek.
 
 \chapter{Analiza porównawcza}
-\section{Opisowe porównanie charakterystyk wybranych frameworków}
 Naturalnym jest, że frameworki webowe różnią się od siebie pod wieloma względami. Różnice można zauważać od samego początku, czyli idei powstania, poprzez podejście do programisty, na sposobie działania i wydajności kończac. Zwykle przyczyną różnorodności jest sama filozofia frameworka, dążenie do doskonałości. Nie jest możliwe osiągnięcie optymalnych wartości w każdej z dziedzin, które frameworki obejmują, przez co twórcy muszą iść na większe bądź mniejsze kompromisy. Niekiedy owe różnice nie pojawiają się z przymusu, ale z przyjęcia konkretnych założeń.
 
 Są jednak sytuacje, kiedy frameworki są do siebie bardzo podobne. Zwykle są to sytuacje, kiedy framework z jednego języka programowania przenoszony jest do innego języka. Tak było w przypadku opisywanego \textit{Express'a}, który powstał jako odzwierciedlenie frameworka \textit{Sinatra}. Innym przypadkiem występowania podobieństw jest chęć wykorzystania jakiegoś fragmentu frameworka, który uznawany jest za standard i bez którego programista musi posiadać większą wiedzę aby odpowiednio wykorzystywać framework.\\
@@ -441,12 +450,14 @@ Nietrudno zauważyć, że \emph{Phoenix} ma niewiele wspólnego z \emph{Express'
 \subsection{Wygoda użytkowania, szybkość powstawania aplikacji}
 \emph{Phoenix} jest frameworkiem bardziej uniwersalnym. Można przy jego pomocy bardzo szybko stworzyć aplikację internetową, która korzysta z bazy danych i innych prostych mechanizmów, np. posiada autentykację użytkowników. Wbudowane mechanizmy pozwalają na realizację takiej funkcjonalności w bardzo szybkim czasie i bez dużych nakładów pracy. Problemem w przypadku \emph{Phoenixa} może być paradygmat funkcyjny języka \emph{Elixir}. Aby poprawnie pisać aplikacje z wykorzystaniem tego języka należy poznać programowanie funkcyjne, które jest dużo mniej popularne niż programowanie obiektowe.
 
-\emph{Express}, przynajmniej na początkowym etapie tworzenia aplikacji wymaga od programisty znajomości środowiska oraz bibliotek, które w innych frameworkach uznawane są jako podstawowe. 
-\subsection{Podsumowanie} % podsumowanie
-...
+\emph{Express}, przynajmniej na początkowym etapie tworzenia aplikacji wymaga od programisty znajomości środowiska oraz bibliotek, które w innych frameworkach uznawane są jako podstawowe. Do momentu, aż programista posiada wyrobione zdanie na temat dostępnych bibliotek, korzystanie z \emph{Express'a} nie jest tak szybkie, jak z \emph{Phoenix'a}.
 
-\section{Subiektywna ocena}
-...
+\subsection{Podsumowanie}
+Nie da się ukryć, że porównywane frameworki stoją poniekąd po dwóch stronach barykady. Jest to konfrontacja kompletnego frameworka typu full-stack z frameworkiem, który powstał jako zaprzeczenie tej idei. Oba rozwiązania mają oczywiście swoich fanów oraz przeciwników. Nie da się jednoznacznie wyłonić lepszego z tych dwóch rozwiązań, ponieważ ich przydatność w dużym stopniu zależy od rodzaju aplikacji, jaki mamy wykonać oraz znajomości danego środowiska.
+
+Biorąc pod uwagę podejście obu frameworków do tworzenia aplikacji, \emph{Phoenix} stanowczo jest wygodniejszym narzędziem. Framework ten stworzony jest do szybkiego prototypowania i jak najbardziej się sprawdza w takim zastosowaniu. Przeszkodą dla wielu programistów może być natomiast funkcyjny język programowania \emph{Elixir}, na którym oparty jest \emph{Phoenix}.
+
+\emph{Express} natomiast sprawdza się jako narzędzie do stworzenia aplikacji internetowej, która nie jest dużych rozmiarów. Podstawowe elementy tego frameworku, jak router zapytań i system widoków, idealnie się nadają do tego typu zastosowań. Problemy zaczynają się dopiero, kiedy aplikacja musi mieć bezpośrednie połączenie z bazą danych oraz wymagane są dodatkowe, bardziej zaawansowane mechanizmy.
 
 \chapter{Implementacja}
 \section{Ruby on Rails}
