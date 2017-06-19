@@ -394,28 +394,59 @@ Przykładowe mechanizmy, które były brane pod uwagę:
 \begin{itemize}
   \item przetwarzanie danych w tle - w przypadku \textit{Ruby on Rails} jest to \textit{Sidekiq}, jego odpowiednikiem w \textit{Phoenix'ie} jest \textit{Akira},
   \item autentykacja/autoryzacja użytkowników, zarządzanie sesją - \textit{Devise} dla \textit{RoR} oraz \textit{Addict} dla \textit{Phoenix'a},
-  \item wsparcie dla js'ów
-  \item wsparcie dla różnych silników szablonów
-  \item wsparcie dla różnych preprocesorów styli (sass, less)
+  \item wsparcie dla dołączania skryptów JavaScript w warstwie prezentacji,
+  \item wsparcie dla różnych preprocesorów styli (Sass, Less)
 \end{itemize}
 
 Istnieje jednak pewna różnica, która może mieć wpływ na wygodę programisty, a jest nim rodzaj języka programowania. Dużo bardziej popularne jest podejście obiektowe, na którym oparty jest \textit{Ruby}. \textit{Elixir} natomiast jest językiem funkcyjnym. Paradygmat funkcyjny różni się znacznie od obiektowego, przez co w przypadku braku znajomości tego paradygmatu, używanie \textit{Phoenix'a} może być dużo trudniejsze. Zasada ta działa oczywiście w dwie strony i jeśli ktoś nie zna podejścia obiektowego, korzystanie z \textit{Ruby on Rails} również może być utrudnione.
 
+\subsection{Podsumowanie}
+Oba frameworki są do siebie podobne w kwestii używania. Bardzo ciekawe oraz pomocne są materiały, które wyjaśniają dlaczego dany framework powstał oraz jak powinien być używany, aby w pełni wykorzystać jego potencjał. Przewagą \textit{Ruby on Rails} jest na pewno dojrzałość oraz ogromna społeczność. W kwestii, oczywiście subiektywnej, przyjemności z korzystania, oba frameworki są na podobnym poziomie. \textit{Phoenix} zyskuje przewagę w kwestii wydajności. Moim zdaniem w tym frameworku drzemie niesamowity potencjał i mam nadzieję, że na stałe wpisze się w zbiór najbardziej popularnych frameworków webowych.
+
 \section{Ruby on Rails vs Express}
+Zestawienie \textit{Ruby on Rails} oraz \textit{Express'a} jest zestawieniem najstarszych frameworków spośród narzędzi wybranych do analizy. Pierwszy powstał w 2004 roku, drugi natomiast swój początek miał w 2010r. Ze względu na swój wiek oba frameworki mają ugruntowaną pozycję na rynku oraz rzesze użytkowników.
+
 \subsection{Filozofia działania}
+W przypadku zestawienia \textit{Ruby on Rails} oraz \textit{Express'a} filozofia działania oraz sama idea powstania są kluczowymi aspektami. Wynika to z faktu, iż \textit{Express} powstał z chęci przeniesienia frameworka \textit{Sinatra} z środowiska programistów Rubiego do środowiska \textit{Node.js}. Framework \textit{Sinatra} powstał natomiast jako kontra do rozbudowanego \textit{Ruby on Rails}. Z tego też powodu \textit{Ruby on Rails} oraz \textit{Express.js} są swoimi przeciwnościami.
+
+Z jednej strony mamy framework typu full-stack i podejście \textit{Convention over Configuration}. Z drugiej - minimalistyczny framework, do którego możemy (ale nie musimy) dołączyć szereg bibliotek, żeby w kwestii funkcjonalności zrównać się z \textit{Ruby on Rails} oraz oczywiście podejście \textit{Configuration over Convention}. Przejście z jednego świata do drugiego bywa dość nieprzyjemne, wymaga dużej czujności programisty oraz większych nakładów pracy. Dlatego też środowiska programistów \textit{Ruby on Rails} oraz \textit{Express'a} rzadko kiedy się przenikają.
+
+Ze względu na ideę powstania każdego z nich, trudno wskazać elementy łączące \textit{Ruby on Rails} oraz \textit{Express'a}. Oba służą do tworzenia aplikacji internetowych, robią to jednak w różny sposób.
+
 \subsection{Architektura aplikacji, elementy składowe}
-\subsection{Wygoda użytkowania}
-\subsection{Dostępność najczęściej wykorzystywanych mechanizmów}
-\subsection{Subiektywna opinia}
+\label{rails_express:architektura}
+Różnice w kwestii architektury aplikacji oraz bibliotek, które się składają na framework, są w przypadku \textit{Ruby on Rails} oraz \textit{Express'a} bardzo łatwe do zauważenia. Wynika to ze złożoności samych frameworków, a więc podejścia typu \textit{full-stack} w przypadku \textit{Ruby on Rails} oraz minimalizmu \textit{Express'a}. Pierwszy posiada praktycznie wszystko, co jest wymagane do stworzenia podstawowej aplikacji internetowej. W przypadku \textit{Express'a} niestety wymagany jest dodatkowy wysiłek programisty w celu stworzenia aplikacji. Podstawowym problemem jest brak dołączonych adapterów umożliwiających połączenie z bazą danych. Framework ten nie posiada również mechanizmu umożliwiające mapowanie obiektowo-relacyjne (ang. \textit{ORM} - Object-Relational Mapping).
+
+Jako, że \textit{Express} nie posiada wbudowanego generatora projektu, projekt nie posiada określonej struktury. Z jednej strony daje to swobodę działania programiście, czego niekiedy brakuje w \textit{Ruby on Rails}. Niewątpliwie możliwość wykorzystania innej architektury aplikacji niż MVC jest mile widzianą cechą. Z drugiej zaś strony może być problematyczne w sytuacji, kiedy każdy projekt ma swoją ,,autorską'' strukturę i nie przestrzega żadnego schematu.
+
+\subsection{Wygoda użytkowania, szybkość powstawania aplikacji}
+Porównianie wygody użytkowania oraz szybkości powstawania aplikacji w przypadku \textit{Ruby on Rails} oraz \textit{Express'a} w dużym stopniu odnosi się do sekcji \ref{rails_express:architektura}. Struktura aplikacji oraz biblioteki dołączone do frameworka są kluczowe dla programistów, szczególnie początkujących. W połączeniu z brakiem domyślnych mechanizmów mapowania obiektowo-relacyjnego, można odnieść wrażenie, iż \textit{Express} nie jest najlepszym frameworkiem dla początkujących programistów. Należy dobrze poznać środowisko, żeby móc wybrać dobrze współpracujące ze sobą komponenty i dopiero wtedy można zacząć tworzyć aplikację. Pod tym względem zupełnym przeciwieństwem jest \textit{Ruby on Rails}. Programista nie musi znać całego środowiska oraz dużej ilości bibliotek, żeby stworzyć aplikację. Jednakże w momencie, kiedy zajdzie taka potrzeba, możliwa jest podmiana niektórych bibliotek bądź też rezygnacja z części w celu zmniejszenia rozmiarów projektu.
+
+\subsection{Podsumowanie}
+Wrażenia po korzystaniu z obu frameworków są zgoła odmienne. I oczywiście znacząco zależą od wcześniejszych doświadczeń i przyzwyczajeń w kwestii tworzenia aplikacji internetowych. Osoba, która dopiero zaczyna swoją przygodę z tą dziedziną informatyki może mieć pewne problemy aby zacząć pracę z \textit{Express'em}. Jego modułowość oraz lekkość są w stanie wykorzystać i docenić osoby, które posiadają pewne doświadczenie w kwestii aplikacji webowych oraz wiedzą dokładnie jakich komponentów będą musieli użyć w celu stworzenia aplikacji. Frameworkiem dużo bardziej przyjaznym dla początkujących oraz przy tworzeniu standardowych aplikacji jest \textit{Ruby on Rails}. Programista może, ale oczywiście nie musi, skorzystać z dostarczonych przez twórców rozwiązań, które w większości przypadków są wystarczające.
+
+Zdecydowaną zaletą \textit{Express'a} jest popularność języka programowania \textit{JavaScript}. Zdecydowanie zmniejsza to barierę wejścia w środowisko tego frameworka.
 
 \section{Phoenix vs Express}
+Ostatnim porównaniem jest konfrontacja \textit{Phoenix'a} z \textit{Express'em}. Z jednej strony mamy bardzo młody framework typu full-stack, z drugiej niewielki, ale sprawdzony framework, który stawia na minimalizm i modularność. Zestawienie to jest o tyle ciekawe, iż \textit{Phoenix} miał wykorzystywać najlepsze elementy innych frameworków, lecz ciężko doszukać się tam rozwiązań znanych z \textit{Express'a}.
+
 \subsection{Filozofia działania}
+Podobnie, jak w przypadku zestawienia \textit{Ruby on Rails} z \textit{Express'em}, filozofia powstania znacząco różni się w przypadku \textit{Phoenix'a} i \textit{Express'a}. Pierwszy jest młodym frameworkiem, który wzoruje się na najlepszych rozwiązaniach, oczywiście subiektywnie wybranych przez twórców, z innych frameworków webowych w celu zapewnienia maksymalnego zadowolenia programisty oraz osiągnięcia wysokiej wydajności. Drugi natomiast preferuje dostarczenie jedynie niezbędnych mechanizmów, stawiając na podejście \emph{Configuration over Convention}.
+
+Wyższość jednego podejścia nad drugim jest oczywiście kwestią dyskusyjną. Jednakże porównując liczbę frameworków podobnych do \emph{Phoenix'a}, a więc typu full-stack oraz podobnych do \emph{Express'a}, czyli minimalistycznych, nie trudno zauważyć jak bardzo popularne jest pierwsze podejście.
+
 \subsection{Architektura aplikacji, elementy składowe}
-\subsection{Wygoda użytkowania} % ew zmiana nazwy
-\subsection{Dostępność najczęściej wykorzystywanych mechanizmów}
-\subsection{Subiektywna opinia} % podsumowanie
+Nietrudno zauważyć, że \emph{Phoenix} ma niewiele wspólnego z \emph{Express'em} w kwestii architektury aplikacji. Sam fakt, iż \emph{Phoenix} jest frameworkiem typu full-stack, definiuje podstawową różnicę. Ponownie, problemem jest tutaj przede wszystkim brak adaptera do baz danych oraz mechanizmu ORM w wypadku \emph{Express'a}. Jest to na tyle często wykorzystywana funkcjonalność, że framework do tworzenia aplikacji działających po stronie serwera powinien mieć wbudowane takie mechanizmy. \emph{Phoenix} narzuca programiście model \emph{MVC}, gdzie \emph{Express} daje dowolność w kwestii użytego wzorca architektonicznego. Jest to z pewnością zaletą \emph{Express'a}, ponieważ model \emph{MVC} jest najbardziej uniwersalny, jednak są sytuacje gdzie inne podejścia dużo lepiej się sprawdzają.
+
+\subsection{Wygoda użytkowania, szybkość powstawania aplikacji}
+\emph{Phoenix} jest frameworkiem bardziej uniwersalnym. Można przy jego pomocy bardzo szybko stworzyć aplikację internetową, która korzysta z bazy danych i innych prostych mechanizmów, np. posiada autentykację użytkowników. Wbudowane mechanizmy pozwalają na realizację takiej funkcjonalności w bardzo szybkim czasie i bez dużych nakładów pracy. Problemem w przypadku \emph{Phoenixa} może być paradygmat funkcyjny języka \emph{Elixir}. Aby poprawnie pisać aplikacje z wykorzystaniem tego języka należy poznać programowanie funkcyjne, które jest dużo mniej popularne niż programowanie obiektowe.
+
+\emph{Express}, przynajmniej na początkowym etapie tworzenia aplikacji wymaga od programisty znajomości środowiska oraz bibliotek, które w innych frameworkach uznawane są jako podstawowe. 
+\subsection{Podsumowanie} % podsumowanie
+...
 
 \section{Subiektywna ocena}
+...
 
 \chapter{Implementacja}
 \section{Ruby on Rails}
