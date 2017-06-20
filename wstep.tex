@@ -1,0 +1,26 @@
+\chapter{Wstęp}
+\section{Ogólny opis pracy}
+W momencie pisania pracy istnieje niezliczona ilość frameworków webowych. Prawie codziennie, dla samego języka JavaScript, powstaje jeden nowy (micro) framework. Przyczyn takiego stanu rzeczy jest kilka. Po pierwsze, problemy, z~jakimi spotykają się programiści są bardzo zróżnicowane oraz skomplikowane. Wynika to z~nacisku biznesu, czyli klientów, na to, aby nowo powstały proukt był innowacyjny. Programista oczywiście posiada narzędzia, które powinny być wystarczające do rozwiązania powierzonego mu problemu, jednakże niekiedy korzystanie z~narzuconych przez framework rozwiązań wręcz utrudnia wykonanie powierzonej pracy. Z~tego powodu powstają nowe frameworki, które udostępniają zestaw narzędzi ukierunkowany pod rozwiązanie nowego, konkretnego problemu. Druga przyczyna jest w~pewien sposób powiązana z~pierwszą. Jest to stworzenie frameworku nie w~odpowiedzi na potrzebę, ale wygenerowanie potrzeby poprzez stworzenie frameworku, który ułatwia rozwiązanie przykładowego problemu. Kolejnym powodem jest próba odchudzenia istniejących frameworków. Przykładem może być Ruby~on~Rails, który jest frameworkiem kompletnym, ale niekiedy posiadającym zbyt dużo wbudowanych funkcji, z~których trudno jest zrezygnować, a~które w~danym projekcie nie zostaną wykorzystane. Zwiększa to rozmiar oraz złożoność projektu, co oczywiście jest niekorzystne.
+
+Ilość dostępnych frameworków pokazuje jak ważnym elementem stały się one dla programistów. Niestety, tak dynamiczny rozwój rozwiązań tego typu powoduje spory problem jeśli chodzi o~wybór technologii. Ninejsza praca ma na celu zaprezentowanie wybranych frameworków webowych oraz dokonanie porównania ich funkcjonalności oraz wydajności. Analiza porównawcza ma na celu wyszczególnienie cech frameworków, na które programista powinien zwrócić szczególną uwagę przy doborze frameworku.
+
+Jako że framework dodaje do aplikacji pewną warstwę abstrakcji, czyli kod, naturalny jest narzut wydajnościowy na aplikację. z~tego powodu, poza różnymi cechami odnośnie budowy i~dostarczanych funkcjonalności, frameworki różnią się również wydajnością.
+
+\section{Cel pracy}
+Celem niniejszej pracy jest dokonanie analizy porównawczej wybranych frameworków webowych. Analiza ta ma posłużyć do wyciągnięcia wniosków na temat cech poszczególnych rozwiązań, a także ich wydajności. Dokumentacja zawiera opis implementacji testowej aplikacji przy pomocy każdego z frameworków oraz wnioski z analizy testów.
+
+Aby poprawnie zrealizować cel pracy, stworzono aplikację testową. W celu urzeczywistnienia problemu, który rozwiązuje owa aplikacja, postanowiono stworzyć rozwiązanie umożliwiające zarządzanie inteligentnym domem. Aplikacja ta pełni rolę jednostki zarządzającej podzespołami inteligentnego domu oraz zbierającej dane z czujników. Spełnia ona następujące wymagania funkcjonalne:
+\begin{itemize}
+  \item rejestracja i logowanie użytkowników,
+  \item przetwarzanie danych w tle,
+  \item możliwość dodawania, edycji oraz usuwania sensorów,
+  \item możliwość dodawania oraz usuwania danych z sensorów,
+  \item przypisywanie danych do sensorów.
+\end{itemize}
+
+Aplikacja spełnia również następujące wymagania niefunkcjonalne:
+\begin{itemize}
+  \item połączenie z bazą danych PostgreSQL,
+  \item zapewnienie skalowalności aplikacji,
+  \item posiadanie testów jednostkowych.
+\end{itemize}
