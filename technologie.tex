@@ -12,6 +12,7 @@ Aplikacja internetowa (webowa) jest aplikacją znajdującą się nie na komputer
 Aby ułatwić korzystanie z~coraz liczniejszych technologii wykorzystywanych w~tworzeniu aplikacji internetowych, powstały narzędzia nazywane frameworkami webowymi. Framework jest uniwersalnym środowiskiem programistycznym, które dostarcza niezbędne narzędzia wymagane do stworzenia aplikacji internetowej w~wybranym języku programowania \cite{framework}. Każdy z~frameworków dostarcza pewną abstrakcję, która znajduje się wokół kodu napisanego przez programistę. Przykładem takiej abstrakcji jest system mapowania ścieżki podstrony (np. \textit{/users/3}) na konkretną akcję w~aplikacji (zwykle akcja \emph{SHOW} dla kontrolera \emph{Users}), czyli \emph{routing}. Twórcy frameworków zauważyli, że w~każdej aplikacji webowej są stosowane te same typy rozwiązań, więc w~wielu przypadkach wprowadzili dane rozwiązania jako integralne części frameworków. W~efekcie programiści mogą korzystać z~gotowych, dogłębnie przetestowanych rozwiązań, które znajdują się w~90\% aplikacji webowych.
 
 \subsection{Wirtualizacja, kontener} % https://dsg.cs.put.poznan.pl/wiki/_media/workshop/docker-skisr.pdf
+\label{sec:wirtualizacja}
 W celu zapewnienia izolacji środowiska działania aplikacji, stosuję się technikę nazywaną wirtualizacją. Polega ona na stworzeniu wirtualnej maszyny, bądź też kontenera, gdzie uruchamiana jest aplikacja. Rozwiązania te, pomimo osiągania podobnego efektu, różnią się pomiędzy sobą pod wieloma względami.
 
 \begin{figure}[h]

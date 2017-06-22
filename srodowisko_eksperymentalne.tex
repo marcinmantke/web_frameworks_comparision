@@ -1,15 +1,126 @@
 \chapter{Projekt komputerowego środowiska eksperymentalnego}
-W celu dokonania analizy porównawczej oraz wydajnościowej wybranych frameworków, należy stworzyć odpowiednie środowisko testowe. 
-
 \section{Plan prowadzenia eksperymentów}
+W celu dokonania analizy porównawczej oraz wydajnościowej wybranych frameworków, stworzono plan przeprowadzania eksperymentów oraz odpowiednie środowisko eksperymentalne. Dzięki temu testy mogły być wykonane rzetelnie, miarodajnie oraz powtarzalnie. Aby przeprowadzone testy były porównywalne, aplikacje stworzone przy pomocy każdego z~frameworków powinny spełniać te same założenia.
+
+Zaplanowany eksperyment składa się z~kilku faz:
+\begin{enumerate}
+  \item stworzenie środowiska eksperymentalnego,
+  \item implementacja aplikacji w~każdym z~frameworków,
+  \item przeprowadzenie testów każdego z~frameworków.
+\end{enumerate}
 
 \section{Wykorzystane narzędzia}
+\subsection{System kontroli wersji}
+Aby ułatwić pracę nad kilkoma aplikacjami jednocześnie, zdecydowano się wykorzystać jeden z~systemów kontroli wersji, jakim jest \emph{Git}. Rozwiązanie to zapewnia dostęp do historii zmian oraz możliwość pobrania kodu z~repozytorium na każdy komputer bądź serwer, co jest sporym ułatwieniem w~kwestii testowania rozwiązań na zdalnej maszynie. Jako hosting został wykorzystany serwis \emph{GitHub}.
+
 \subsection{Docker}
-\section{Benchmarki}
-% https://www.sitepoint.com/tools-testing-website-performance/
-\subsection{Ruby}
-% http://rubylearning.com/blog/2013/06/19/how-do-i-benchmark-ruby-code/
-\subsection{Elixir}
-% https://github.com/PragTob/benchee
-\subsection{JavaScript}
-% https://benchmarkjs.com/
+W celu zapewnienia izolacji środowiska developerskiego oraz testowego, zdecydowano się skorzystać z~mechanizmu wirtualizacji. Dzięki temu aplikacje można w~bardzo prosty sposób przenosić na inne maszyny mając pewność, że zawsze będą uruchamiane dokładnie w~ten sam sposób. Jedyną różnicą są dostępne zasoby mocy obliczeniowej oraz pamięci, które zależą oczywiście od parametrów komputera bądź też serwera. Dokładniejszy opis tego rozwiązania przedstawiony jest w~sekcji \ref{sec:wirtualizacja}.
+
+\begin{lstlisting}[caption={Przykładowy plik Dockerfile.}]
+FROM ruby:2.4.1
+
+ENV APP_ROOT /app
+ENV BUNDLE_PATH /bundle
+
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libpq-dev nodejs cmake
+
+WORKDIR $APP_ROOT
+
+ADD . $APP_ROOT
+\end{lstlisting}
+
+W celu połączenia kilku kontenerów (kontener aplikacji, bazy danych itd) w~jedną sieć zostało wykorzystane narzędzie \emph{docker-compose}. Przykładowa konfiguracja znajduje się na listingu \ref{lst:compose}.
+
+\begin{lstlisting}[caption={Przykładowy plik docker-compose.yml.},label={lst:compose}]
+  version: '2'
+
+  services:
+    db:
+      image: postgres:9.6.1 # reuse postgres container
+      volumes:
+        - /var/lib/postgresql/data
+
+    redis:
+      image: redis:3.2.6-alpine
+
+    web:
+      build:
+        dockerfile: Dockerfile
+        context: .
+      ports:
+        - 3000:3000
+      volumes:
+        - .:/app
+      links:
+        - db
+        - redis
+      depends_on:
+        - db
+        - redis
+      command: bundle exec rails s -b 0.0.0.0
+      environment:
+        - REDIS_URL=redis://redis:6379
+        - DATABASE_URL=postgres://postgres@db:5432
+      volumes_from:
+        - bundle
+
+    sidekiq:
+      build:
+        dockerfile: Dockerfile
+        context: .
+      volumes:
+        - .:/app
+      links:
+        - db
+        - redis
+      depends_on:
+        - db
+        - redis
+      command: bundle exec sidekiq
+      environment:
+        - REDIS_URL=redis://redis:6379
+        - DATABASE_URL=postgres://postgres@db:5432
+      volumes_from:
+        - bundle
+
+    bundle:
+      image: busybox
+      command: echo "I'm a little data container, short and stout..."
+      volumes:
+        - /bundle
+\end{lstlisting}
+
+\subsection{Locust}
+Wydajność aplikacji internetowych zwykle bada się pod kątem ilości użytkowników, którzy jednocześnie mogą korzystać z~aplikacji. Jednym z~rozwiązań, które umożliwia przeprowadzenie badań obciążeniowych aplikacji, jest narzędzie \emph{Locust}. Jest to prosta aplikacja, która składa się z~szeregu skryptów w~\emph{Python'ie} oraz interfejsu graficznego dostępnego przez przeglądarkę internetową.
+
+\emph{Locust} tworzy zadaną ilość wątków, które symulują operacje przeprowadzane przez użytkowników. Na podstawie zebranych odpowiedzi od serwera oraz pomiaru czasów, może określić wartość obsłużonych zapytań na sekundę (ang. RPS - requests per second).
+
+Przy pomocy skryptów definiujemy które endpointy aplikacji \emph{Locust} ma przetestować oraz jakie dane powinien wysłać. Dzięki temu można zasymulować rzeczywiste zachowanie użytkownika. Przykładowy skrypt konfiguracyjny znajduje się na listingu \ref{lst:locust}.
+
+\begin{lstlisting}[caption={Przykładowy plik konfiguracyjny narzędzia Locust.},label={lst:locust},language=Python]
+from locust import HttpLocust, TaskSet
+
+def login(l):
+    l.client.post("/users/sign_in", json={"user":{"email":"marcin.mantke@gmail.com", "password":"password"}})
+
+def index(l):
+    l.client.get("/")
+
+def temperature_sensor_data(l):
+    l.client.get("/temperature_sensor_data")
+
+def create_temp_data(l):
+    l.client.post("/temperature_sensor_data", json={"temperature_sensor_datum": {"sensor_id": "1", "utc_timestamp": "1496005043", "value": "2"}})
+
+class UserBehavior(TaskSet):
+    tasks = {index: 0, temperature_sensor_data: 5, create_temp_data: 1}
+
+    def on_start(self):
+        login(self)
+
+class WebsiteUser(HttpLocust):
+    task_set = UserBehavior
+    min_wait = 5000
+    max_wait = 9000
+\end{lstlisting}
