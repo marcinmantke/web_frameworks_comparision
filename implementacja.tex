@@ -14,7 +14,7 @@ Każda z aplikacji obsługuje bazę danych o strukturze, która przedstawiona je
 \begin{figure}[h]
   \centering
   \includegraphics[width=\linewidth]{images/diagram_erd}
-  \caption{Diagram ERD bazy danych.}
+  \caption{Diagram ERD bazy danych.\\Źródło: opracowanie własne.}
   \label{fig:diagram_erd}
 \end{figure}
 \newpage
@@ -321,8 +321,118 @@ end
 \end{lstlisting}
 
 \section{Express}
+\emph{Express} nie posiada domyślnie zdefiniowanej architektury, a więc również struktury projektu. Decyzja odnośnie architektury aplikacji leży w całości po stronie programisty. Aby zachować podobieństwo do pozostałych aplikacji, zdecydowano się na zastosowanie modelu \emph{Model-View-Controller}.
+
 \subsection{Modele}
+Korzystanie z modeli możliwe jest dzięki zastosowaniu biblioteki \emph{Sequelize.js}. W modelach zawarte są informacje na temat pól danego modelu i ich typów, a więc jego schemat. Dodatkowo, model zawiera informacje na temat relacji z innymi modelami.
+
+\begin{lstlisting}[caption={Model sensora temperatury w Express'ie.},label={lst:express_temp_sensor_model}]
+var Sequelize = require('sequelize')
+
+var TemperatureSensor = connection.define('temperature_sensors',
+                                        TemperatureSensorMeta.attributes,
+                                        TemperatureSensorMeta.options)
+
+TemperatureSensor.hasMany(TemperatureSensorDatum);
+
+var attributes = {
+  name: {
+    type: Sequelize.STRING,
+  },
+  active: {
+    type: Sequelize.BOOLEAN,
+  }
+}
+
+var options = {
+  freezeTableName: true
+}
+
+module.exports.attributes = attributes
+module.exports.options = options
+\end{lstlisting}
 
 \subsection{Kontrolery}
+W przeciwieństwie do \emph{Ruby on Rails} i \emph{Phoenix'a}, \emph{Express} nie posiada mechanizmu generowania \emph{scaffold'ów}. W efekcie wszystkie metody należy stworzyć samodzielnie, co ma wpływ na szybkość powstawania aplikacji, w której większośc akcji jest standardowych, czyli spełniających założenia \emph{CRUD}. Na listingu \ref{lst:express_temp_data_controller} przedstawiony jest kontroller we frameworku \emph{Express}.
+
+\begin{lstlisting}[caption={Kontroler danych z sensora temperatury we frameworku Express.},label={lst:express_temp_data_controller}]
+var Model = require('../model/models.js')
+
+module.exports.index = function(req, res) {
+  Model.TemperatureSensorDatum.findAll().then(data => {
+    res.send(data)
+  })
+}
+
+module.exports.create = function(req, res) {
+  var value = req.body.temperature_sensor_datum.value
+  var sensorId = req.body.temperature_sensor_datum.sensor_id
+
+  var newTemperatureSensorDatum = {
+    value: parseFloat(value),
+    temperatureSensorId: sensorId
+  }
+
+  Model.TemperatureSensorDatum.create(newTemperatureSensorDatum).then(function() {
+    res.redirect('/')
+  }).catch(function(error) {
+    res.send('error')
+    req.flash('error', "Something went wrong...")
+  })
+}
+\end{lstlisting}
 
 \subsection{Widoki}
+W implementacji warstwy widoków został wykorzystany silnik \emph{Handlebards}. Jest to popularne rozwiązanie, spotykane w innych frameworkach webowych zorientowanych na warstwę prezentacji. Przykładowym frameworkiem, który domyślnie korzysta z tego mechanizmu jest \emph{Ember.js}. System ten oparty jest o mechanizm \emph{layout'ów}, w których osadzane są konkretne podstrony. Dzięki temu możliwe jest zachowanie spójnego wyglądu na każdej z podstron. Na listingach \ref{lst:express_layout} oraz \ref{lst:express_view} przedstawiony jest layout strony oraz zawartość podstrony do rejestracji użytkownika.
+
+\begin{lstlisting}[caption={Layout używany w aplikacji napisanej przy pomocy Express'a.},label={lst:express_layout},language=HTML]
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"\>
+  <title>Example App</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"\>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"\>
+
+  <link rel="stylesheet" href="/styles/app.css"\>
+
+  {{{_sections.head}}}
+</head>
+<body>
+    {{{body}}}
+
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"\></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"\></script>
+</body>
+</html>
+\end{lstlisting}
+
+\newpage
+\begin{lstlisting}[caption={Podstrona rejestracji użytkownika w Express'ie.},label={lst:express_view},language=HTML]
+{{#section 'head'}}
+    <link rel="stylesheet" href="/styles/auth.css"\>
+{{/section}}
+
+<div class="container"\>
+  <form method="POST" action="/users/sign_up" class="form-signin"\>
+    <h2 class="form-signin-heading"\>Create an account</h2>
+
+    {{#if errorMessage}}
+      <div class="alert alert-danger"\>
+        {{errorMessage}}
+      </div>
+    {{/if}}
+
+    <label for="inputEmail" class="sr-only"\>Email</label>
+    <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email" required autofocus>
+    <label for="inputPassword" class="sr-only"\>Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+    <label for="inputPassword" class="sr-only"\>Repeat Password</label>
+    <input type="password" id="inputPassword2" name="password2" class="form-control" placeholder="Repeat Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit"\>Sign up</button>
+  </form>
+</div>
+\end{lstlisting}
